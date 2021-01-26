@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Евгения](https://up.htmlacademy.ru/javascript/22/user/1172931).
-* Наставник: `Неизвестно`.
+* Наставник: `Elizaveta Kryazhkova`.
 
 ---
 
