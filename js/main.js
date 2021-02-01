@@ -28,4 +28,4 @@ const getRandomMap = function (MIN_II, MAX_II, NUMBER_AFTER_COMMA) {
   }
 }
 
-alert(getRandomMap(MIN_II, MAX_II, NUMBER_AFTER_COMMA));
+alert('число с плавающей точкой из диапазона от ' + MIN_II + ' до ' + MAX_II + ' с указанным количеством знаков после запятой (' + NUMBER_AFTER_COMMA + '): ' + getRandomMap(MIN_II, MAX_II, NUMBER_AFTER_COMMA));
