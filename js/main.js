@@ -1,31 +1,38 @@
-// ******************* ЗАДАНИЕ № 1 *******************************************************
-const MIN=10;
-const MAX=20;
+// рандомное число
 
-const getRandom = function (MIN = Math.ceil(MIN), MAX = Math.floor(MAX)) {
-  if (MAX <= MIN) {
-    throw new Error('Ошибка ввода');
-  } else {
-    return Math.floor(MIN + Math.random() * (MAX + 1 - MIN));
+const getRandomNumber = function (min = 0, max = 0) {
+  if (max <= min) {
+    throw new Error('Ошибка ввода: ' + 'min=' + min + ', max=' + max + '.');
   }
+  return min + Math.random() * (max + 1 - min);
 }
 
-alert('целое число из диапазона от ' + MIN + ' до ' + MAX + ': ' + getRandom(MIN,MAX) );
+alert(getRandomNumber(1, 4));
 
 
+// рандомное число целое
 
-// ******************* ЗАДАНИЕ № 2 *******************************************************
-
-const MIN_II = 10;
-const MAX_II = 20;
-const NUMBER_AFTER_COMMA = 5;
-
-const getRandomMap = function (MIN_II, MAX_II, NUMBER_AFTER_COMMA) {
-  if ((MIN_II >= 0) && (MAX_II > MIN_II) && (Number.isInteger(NUMBER_AFTER_COMMA))) {
-    return Math.floor((Math.random() * (MAX_II - MIN_II) + MIN_II) * Math.pow(10,NUMBER_AFTER_COMMA)) / Math.pow(10,NUMBER_AFTER_COMMA);
-  } else {
-    throw new Error('Ошибка ввода');
-  }
+const getRandomInteger = function (min = 0, max = 0) {
+  let resultInteger = Math.floor(getRandomNumber(min, max));
+  return resultInteger;
 }
 
-alert('число с плавающей точкой из диапазона от ' + MIN_II + ' до ' + MAX_II + ' с указанным количеством знаков после запятой (' + NUMBER_AFTER_COMMA + '): ' + getRandomMap(MIN_II, MAX_II, NUMBER_AFTER_COMMA));
+alert(getRandomInteger(1.1, 9.8));
+
+
+// рандомное число с плавающей точкой
+
+const getRandomMap = function (min = 0, max = 0, numberAfterComma) {
+  let resultRandom = getRandomNumber(min, max);
+  if (resultRandom != null) {
+    // if ((Object.keys(resultRandom).length !== 0) && (max>=min)) {
+    if ((min >= 0) && (max >= min)) {
+      let resultMap = resultRandom.toFixed(numberAfterComma);
+      return resultMap;
+    }
+    throw new Error('Ошибка ввода: ' + 'min=' + min + ', max=' + max + ' numberAfterComma=' + numberAfterComma + '.');
+  }
+  throw new Error('Ошибка значения resultRandom: ' + resultRandom + ' - пустое значение.');
+}
+
+alert(getRandomMap(1.5, 7.89754, 9.5));
