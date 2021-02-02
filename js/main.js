@@ -7,7 +7,7 @@ const getRandomNumber = function (min = 0, max = 0) {
   return min + Math.random() * (max + 1 - min);
 }
 
-alert(getRandomNumber(1, 4));
+getRandomNumber(1, 4);
 
 
 // рандомное число целое
@@ -17,7 +17,7 @@ const getRandomInteger = function (min = 0, max = 0) {
   return resultInteger;
 }
 
-alert(getRandomInteger(1.1, 9.8));
+getRandomInteger(1.1, 9.8);
 
 
 // рандомное число с плавающей точкой
@@ -35,4 +35,4 @@ const getRandomMap = function (min = 0, max = 0, numberAfterComma) {
   throw new Error('Ошибка значения resultRandom: ' + resultRandom + ' - пустое значение.');
 }
 
-alert(getRandomMap(1.5, 7.89754, 9.5));
+getRandomMap(1.5, 7.89754, 9.5);
