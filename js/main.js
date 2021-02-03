@@ -7,32 +7,22 @@ const getRandomNumber = function (min = 0, max = 0) {
   return min + Math.random() * (max + 1 - min);
 }
 
-getRandomNumber(1, 4);
-
 
 // рандомное число целое
 
 const getRandomInteger = function (min = 0, max = 0) {
-  let resultInteger = Math.floor(getRandomNumber(min, max));
-  return resultInteger;
+  return Math.floor(getRandomNumber(min, max));
 }
 
-getRandomInteger(1.1, 9.8);
 
 
 // рандомное число с плавающей точкой
 
 const getRandomMap = function (min = 0, max = 0, numberAfterComma) {
   let resultRandom = getRandomNumber(min, max);
-  if (resultRandom != null) {
-    // if ((Object.keys(resultRandom).length !== 0) && (max>=min)) {
-    if ((min >= 0) && (max >= min)) {
-      let resultMap = resultRandom.toFixed(numberAfterComma);
-      return resultMap;
-    }
-    throw new Error('Ошибка ввода: ' + 'min=' + min + ', max=' + max + ' numberAfterComma=' + numberAfterComma + '.');
-  }
-  throw new Error('Ошибка значения resultRandom: ' + resultRandom + ' - пустое значение.');
+  return resultRandom ? resultRandom.toFixed(numberAfterComma) : '0' ;
 }
 
-getRandomMap(1.5, 7.89754, 9.5);
+getRandomNumber(1, 4);
+getRandomInteger(1.1, 9.8);
+getRandomMap(1.5, 7.89754, 9)
