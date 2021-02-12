@@ -39,20 +39,34 @@ const PHOTOS = [
 ];
 
 
-const GUESTS = {
-  MIN: 1,
-  MAX: 15,
+const Guests = {
+  min: 1,
+  max: 15,
 };
 
-const ROOMS = {
-  MIN: 1,
-  MAX: 5,
+const Rooms = {
+  min: 1,
+  max: 5,
 };
 
-const PRICE = {
-  MIN: 1000,
-  MAX: 1000000,
+const Price = {
+  min: 1000,
+  max: 1000000,
 };
+
+const Location = {
+  x: {
+    min: 35.65000,
+    max: 35.70000,
+  },
+
+  y: {
+    min: 139.70000,
+    max: 139.80000,
+  },
+}
+
+
 
 
 //  Генерация случайного числа
@@ -64,7 +78,7 @@ const getRandomNumber = function (min = 0, max = 0) {
 }
 
 const getRandomInteger = function (min = 0, max = 0) {
-  return '0' + Math.floor(getRandomNumber(min, max));
+  return Math.floor(getRandomNumber(min, max));
 }
 
 
@@ -77,27 +91,54 @@ const getRandomLocation = function (min = 0, max = 0, numberAfterComma) {
 
 
 
-//  Выбор случайного элемента массива
+//  Генерация случайного элемента массива
 const getRandomArrayElement = (elements) => {
   return elements[getRandomInteger(0, elements.length - 1)];
 }
 
 
+// //   Генерация случайного индекса массива
+// const getRandomIndexElement = (elements) => {
+//   return getRandomInteger(0, elements.length - 1);
+// }
 
-//   Перетасовка массива
-const getMixArray = (elements) => {
-  return elements.slice().sort(function () {
-    return 0.5 - Math.random()
-  });
+
+
+//  Массив случайной длины
+const getArrayRandomLength = function (elements) {
+  const data = [];
+  for (let i = 0; i <= getRandomInteger(0, elements.length - 1); i++) {
+    let value = getRandomArrayElement(elements);
+    data.push(value);
+  }
+  return new Set(data);
 }
 
 
 
-//   Географические координаты объекта
-const LOCATIONS = {
-  'x': getRandomLocation(35.65000, 35.70000),
-  'y': getRandomLocation(139.70000, 139.80000),
+//   Генерация координат объекта
+//   ВАРИАНТ # 1
+const Locations = {
+  x: getRandomLocation(Location.x.min, Location.x.max, 5),
+  y: getRandomLocation(Location.y.min, Location.y.max, 5),
 }
+
+
+/*
+//   Генерация координат объекта (функция)
+//   ВАРИАНТ # 2
+const getRandomСoordinates = function (x, y) {
+  x = Number(getRandomLocation(Location.x.min, Location.x.max, 5));
+  y = Number(getRandomLocation(Location.y.min, Location.y.max, 5));
+
+  const Locations = {
+    x: x,
+    y: y,
+  };
+
+  return (Locations);
+*/
+
 
 
 
@@ -105,23 +146,27 @@ const LOCATIONS = {
 const getАdvertising = () => {
   return {
     author: {
-      avatar: 'img/avatars/user0' + getRandomNumber(1, 8) + '.png',
+      avatar: 'img/avatars/user0' + getRandomInteger(1, 8) + '.png',
     },
     offer: {
       title: getRandomInteger(TITLE), // — заголовок предложения. Придумайте самостоятельно.
-      address: '${location.x}, ${location.y}', // — адрес предложения, составляется из координат по маске {{location.x}}, {{location.y}}.
-      price: getRandomNumber(PRICE.min, PRICE.max), // — стоимость. Любое положительное число.
+      address: Locations.x + ', ' + Locations.y, // — адрес предложения, составляется из координат по маске {{location.x}}, {{location.y}}.
+
+      price: getRandomNumber(Price.min, Price.max), // — стоимость. Любое положительное число.
       type: getRandomArrayElement(TYPE), // — одно из четырёх фиксированных значений: palace, flat, house или bungalow
-      rooms: getRandomInteger(ROOMS.min, ROOMS.max),  // — количество комнат. Любое положительное число
-      guests: getRandomInteger(GUESTS.min, GUESTS.max),   // — количество гостей. Любое положительное число
+      rooms: getRandomInteger(Rooms.min, Rooms.max),  // — количество комнат. Любое положительное число
+      guests: getRandomInteger(Guests.min, Guests.max),   // — количество гостей. Любое положительное число
       checkin: getRandomArrayElement(TIMES),   // — одно из трёх фиксированных значений: 12:00, 13:00 или 14:00
       checkout: getRandomArrayElement(TIMES),   // — одно из трёх фиксированных значений: 12:00, 13:00 или 14:00
-      features: getMixArray(FEATURES).slice(0, getRandomInteger(1, FEATURES.length) ), //  — массив случайной длины из значений: wifi, dishwasher, parking, washer, elevator, conditioner. Значения не должны повторяться.
+      features: getArrayRandomLength(FEATURES),
       description: 'Описание', // — описание помещения. Придумайте самостоятельно
-      photos: getMixArray(PHOTOS).slice(0, getRandomInteger(1, PHOTOS.length) ),  //  — массив случайной длины из значений
+      photos: getArrayRandomLength(PHOTOS),
     },
-    location: getRandomLocation(LOCATIONS),
+    location: {
+      x: Number(Locations.x),
+      y: Number(Locations.y),
+    },
   }
 };
 
-getАdvertising ();
+getАdvertising();
