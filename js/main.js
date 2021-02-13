@@ -118,13 +118,13 @@ const getArrayRandomLength = function (elements) {
 
 //   Генерация координат объекта
 //   ВАРИАНТ # 1
-const Locations = {
-  x: getRandomLocation(Location.x.min, Location.x.max, 5),
-  y: getRandomLocation(Location.y.min, Location.y.max, 5),
-}
+// const Locations = {
+//   x: getRandomLocation(Location.x.min, Location.x.max, 5),
+//   y: getRandomLocation(Location.y.min, Location.y.max, 5),
+// }
 
 
-/*
+
 //   Генерация координат объекта (функция)
 //   ВАРИАНТ # 2
 const getRandomСoordinates = function (x, y) {
@@ -137,7 +137,8 @@ const getRandomСoordinates = function (x, y) {
   };
 
   return (Locations);
-*/
+}
+
 
 
 
@@ -150,7 +151,9 @@ const getАdvertising = () => {
     },
     offer: {
       title: getRandomInteger(TITLE), // — заголовок предложения. Придумайте самостоятельно.
-      address: Locations.x + ', ' + Locations.y, // — адрес предложения, составляется из координат по маске {{location.x}}, {{location.y}}.
+      // address: Object.keys(getRandomСoordinates())[0] + ', ' +  Object.keys(getRandomСoordinates())[1], //Locations.x + ', ' + Locations.y, // — адрес предложения, составляется из координат по маске {{location.x}}, {{location.y}}.
+      // address: Object.keys(getRandomСoordinates())[0] + ', ' +  Object.keys(getRandomСoordinates())[1], //Locations.x + ', ' + Locations.y, // — адрес предложения, составляется из координат по маске {{location.x}}, {{location.y}}.
+      address: getRandomLocation(Location.x.min, Location.x.max, 5)  + ', ' + getRandomLocation(Location.y.min, Location.y.max, 5),
 
       price: getRandomNumber(Price.min, Price.max), // — стоимость. Любое положительное число.
       type: getRandomArrayElement(TYPE), // — одно из четырёх фиксированных значений: palace, flat, house или bungalow
@@ -162,11 +165,8 @@ const getАdvertising = () => {
       description: 'Описание', // — описание помещения. Придумайте самостоятельно
       photos: getArrayRandomLength(PHOTOS),
     },
-    location: {
-      x: Number(Locations.x),
-      y: Number(Locations.y),
-    },
-  }
+    location: getRandomСoordinates(),
+  };
 };
 
-getАdvertising();
+getАdvertising()
