@@ -66,6 +66,8 @@ const Location = {
   },
 }
 
+const NUMBER_AFTER_COMMA = 5;
+
 
 
 
@@ -84,9 +86,9 @@ const getRandomInteger = function (min = 0, max = 0) {
 
 
 //   Генерация числа с плавающей точкой
-const getRandomLocation = function (min = 0, max = 0, numberAfterComma) {
+const getRandomLocation = function (min = 0, max = 0, NUMBER_AFTER_COMMA) {
   let resultRandom = getRandomNumber(min, max);
-  return resultRandom ? resultRandom.toFixed(numberAfterComma) : '0';
+  return resultRandom ? resultRandom.toFixed(NUMBER_AFTER_COMMA) : '0';
 }
 
 
@@ -96,11 +98,6 @@ const getRandomArrayElement = (elements) => {
   return elements[getRandomInteger(0, elements.length - 1)];
 }
 
-
-// //   Генерация случайного индекса массива
-// const getRandomIndexElement = (elements) => {
-//   return getRandomInteger(0, elements.length - 1);
-// }
 
 
 
@@ -116,20 +113,10 @@ const getArrayRandomLength = function (elements) {
 
 
 
-//   Генерация координат объекта
-//   ВАРИАНТ # 1
-// const Locations = {
-//   x: getRandomLocation(Location.x.min, Location.x.max, 5),
-//   y: getRandomLocation(Location.y.min, Location.y.max, 5),
-// }
-
-
-
 //   Генерация координат объекта (функция)
-//   ВАРИАНТ # 2
 const getRandomСoordinates = function (x, y) {
-  x = Number(getRandomLocation(Location.x.min, Location.x.max, 5));
-  y = Number(getRandomLocation(Location.y.min, Location.y.max, 5));
+  x = Number(getRandomLocation(Location.x.min, Location.x.max, NUMBER_AFTER_COMMA));
+  y = Number(getRandomLocation(Location.y.min, Location.y.max, NUMBER_AFTER_COMMA));
 
   const Locations = {
     x: x,
@@ -140,33 +127,29 @@ const getRandomСoordinates = function (x, y) {
 }
 
 
-
-
-
 //   Генерация объекта с объявлением
 const getАdvertising = () => {
+  const location = getRandomСoordinates();
+
   return {
     author: {
       avatar: 'img/avatars/user0' + getRandomInteger(1, 8) + '.png',
     },
     offer: {
-      title: getRandomInteger(TITLE), // — заголовок предложения. Придумайте самостоятельно.
-      // address: Object.keys(getRandomСoordinates())[0] + ', ' +  Object.keys(getRandomСoordinates())[1], //Locations.x + ', ' + Locations.y, // — адрес предложения, составляется из координат по маске {{location.x}}, {{location.y}}.
-      // address: Object.keys(getRandomСoordinates())[0] + ', ' +  Object.keys(getRandomСoordinates())[1], //Locations.x + ', ' + Locations.y, // — адрес предложения, составляется из координат по маске {{location.x}}, {{location.y}}.
-      address: getRandomLocation(Location.x.min, Location.x.max, 5)  + ', ' + getRandomLocation(Location.y.min, Location.y.max, 5),
-
-      price: getRandomNumber(Price.min, Price.max), // — стоимость. Любое положительное число.
-      type: getRandomArrayElement(TYPE), // — одно из четырёх фиксированных значений: palace, flat, house или bungalow
-      rooms: getRandomInteger(Rooms.min, Rooms.max),  // — количество комнат. Любое положительное число
-      guests: getRandomInteger(Guests.min, Guests.max),   // — количество гостей. Любое положительное число
-      checkin: getRandomArrayElement(TIMES),   // — одно из трёх фиксированных значений: 12:00, 13:00 или 14:00
-      checkout: getRandomArrayElement(TIMES),   // — одно из трёх фиксированных значений: 12:00, 13:00 или 14:00
+      title: getRandomArrayElement(TITLE),
+      address: location.x + ', ' + location.y,
+      price: getRandomNumber(Price.min, Price.max),
+      type: getRandomArrayElement(TYPE),
+      rooms: getRandomInteger(Rooms.min, Rooms.max),
+      guests: getRandomInteger(Guests.min, Guests.max),
+      checkin: getRandomArrayElement(TIMES),
+      checkout: getRandomArrayElement(TIMES),
       features: getArrayRandomLength(FEATURES),
-      description: 'Описание', // — описание помещения. Придумайте самостоятельно
+      description: 'Описание',
       photos: getArrayRandomLength(PHOTOS),
     },
-    location: getRandomСoordinates(),
+    location: location,
   };
 };
 
-getАdvertising()
+getАdvertising();
