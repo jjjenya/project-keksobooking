@@ -78,12 +78,12 @@ const getRandomСoordinates = function (x, y) {
   x = Number(getRandomLocation(Location.X.MIN, Location.X.MAX, NUMBER_AFTER_COMMA));
   y = Number(getRandomLocation(Location.X.MIN, Location.Y.MAX, NUMBER_AFTER_COMMA));
 
-  const Locations = {
+  const locations = {
     X: x,
     Y: y,
   };
 
-  return (Locations);
+  return (locations);
 }
 
 
@@ -112,4 +112,4 @@ const getАdvertising = () => {
   };
 };
 
-alert (getАdvertising());
+getАdvertising();

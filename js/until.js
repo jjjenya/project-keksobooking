@@ -35,7 +35,7 @@ const getArrayRandomLength = function (elements) {
     let value = getRandomArrayElement(elements);
     data.push(value);
   }
-  return new Set(data);
+  return [...new Set(data)];
 }
 
 
