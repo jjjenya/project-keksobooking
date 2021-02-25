@@ -1,4 +1,4 @@
-import { getRandomNumber, getRandomInteger, getRandomLocation, getRandomArrayElement, getArrayRandomLength } from './util.js';
+import { getRandomNumber, getRandomInteger, getRandomLocation, getRandomArrayElement, getArrayRandomLength } from './until.js';
 
 
 // Тестовые данные
@@ -112,4 +112,8 @@ const getАdvertising = () => {
   };
 };
 
-getАdvertising();
+// getАdvertising();
+
+const getАdvertisingS = () => new Array(2).fill(null).map(() => getАdvertising());
+
+export { getАdvertisingS, TYPE };
