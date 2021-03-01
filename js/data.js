@@ -112,8 +112,14 @@ const getАdvertising = () => {
   };
 };
 
-// getАdvertising();
 
-const getАdvertisingS = () => new Array(2).fill(null).map(() => getАdvertising());
+const createArrayАdvertising = function () {
+  const NUMBER_АDVERTISING = 1;
+  const array = [];
+  for (let i = 0; i < NUMBER_АDVERTISING; i++) {
+    array[i] = getАdvertising();
+  }
+  return (array);
+}
 
-export { getАdvertisingS, TYPE };
+export { createArrayАdvertising, TYPE };
