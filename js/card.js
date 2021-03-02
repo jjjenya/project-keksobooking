@@ -1,3 +1,5 @@
+import { similarArray } from './main.js';
+
 //   Сопоставление типов жилья с подписями
 const offerTypesMap = {
   'palace': 'Дворец',
@@ -17,8 +19,27 @@ const cardTemplate = document.querySelector('#card').content;
 const cardElement = cardTemplate.querySelector('article');
 
 
+// Скрытие элемента по классу
+const hideElement = function (className) {
+  cardElement.querySelector(className).classList.add('hidden');
+}
+
+
+// Создание элемента
+const createElements = function (element) {
+  const fragmentElement = document.createDocumentFragment();
+
+  for (let i = 0; i < element.length; i++) {
+    const elements = document.createElement(element[i]);
+    fragmentElement.appendChild(elements);
+  }
+  return fragmentElement;
+}
+
+
+
 //   Функция, которая принимает в себя одно объявление и заполняет одну карточку
-const createCard = function (add) {
+const createCard = function (add = similarArray[0]) {                              // В эту функцию нам нужно передать уже сам объект объявления, какой-то один элемент из всего массива объявлений
   const newCardElement = cardElement.cloneNode(true);
 
 
@@ -27,12 +48,12 @@ const createCard = function (add) {
 
 
   // title
-  // проверка заполняемости данных и скрытие блока в карточке при их отсутствии
-  const titleElement = cardElement.querySelector('.popup__title');
-  if (add.offer.title.length === 0) {
-    titleElement.remove();
+  // проверка заполняемости данных
+  const titleElement = newCardElement.querySelector('.popup__title');
+  if (titleElement) {
+    titleElement.textContent = add.offer.title;
   } else {
-    newCardElement.querySelector('.popup__title').textContent = add.offer.title;
+    hideElement('.popup__title');
   }
 
 
@@ -43,47 +64,18 @@ const createCard = function (add) {
   newCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + add.offer.checkin + ' выезд до ' + add.offer.checkout;
 
 
-  //  feature
+  //  features
   const featureListElement = newCardElement.querySelector('.popup__features');
-  featureListElement.innerHTML = '';   // Очищаем элемент
-
-  const createFeatures = function (add) {
-    const fragmentFeature = document.createFragment(add);
-
-    for (let i = 0; i < add.offer.features.length; i++) {
-      const featureElement = document.createElement(add.offer.features[i]);
-      fragmentFeature.appendChild(featureElement);
-    }
-    return fragmentFeature;
-  }
-
-  featureListElement.appendChild(createFeatures);
+  featureListElement.innerHTML = '';   // Очищение элемента
+  const features = add.offer.features;
+  featureListElement.appendChild(createElements(features));
 
 
   //  photo
-  const photoListElement = cardElement.querySelector('.popup__photos');
-  featureListElement.innerHTML = '';   // Очищаем элемент
-
-  const createPhotos = function (add) {
-    const fragmentPhoto = document.createFragment(add);
-
-    for (let i = 0; i < add.offer.features.length; i++) {
-      const featureElement = document.createElement(add.offer.photos[i]);
-      fragmentPhoto.appendChild(featureElement);
-    }
-    return fragmentPhoto;
-  }
-
-  photoListElement.appendChild(createPhotos);
-
-
-  /*
-      featureList.innerHTML = '';
-      for (var i = 0; i < ad.offer.features.length; i++) {
-        var featureElement = '<li class="feature feature--' + ad.offer.features[i] + '"></li>';
-        featureList.insertAdjacentHTML('afterbegin', featureElement);
-      }
-  */
+  const photoListElement = newCardElement.querySelector('.popup__photos');
+  photoListElement.innerHTML = '';   // Очищение элемента
+  const photos = add.offer.photos;
+  photoListElement.appendChild(createElements(photos));
 
 
   //  description
@@ -98,9 +90,10 @@ const createCard = function (add) {
   //  Заполнение карточки данными
   cardFragment.appendChild(newCardElement);
 
+
   //  Возврат карточки
   return (newCardElement);
 }
 
-// Вставка сформированной карточки
-mapCanvas.appendChild(createCard);
+
+export { createCard, mapCanvas };

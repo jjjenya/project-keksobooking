@@ -1,4 +1,4 @@
-import { getRandomNumber, getRandomInteger, getRandomLocation, getRandomArrayElement, getArrayRandomLength } from './until.js';
+import { getRandomNumber, getRandomInteger, getRandomLocation, getRandomArrayElement, getArrayRandomLength } from './util.js';
 
 
 // Тестовые данные
@@ -71,6 +71,7 @@ const Location = {
 
 const NUMBER_AFTER_COMMA = 5;
 
+const NUMBER_АDVERTISING = 10;
 
 
 //   Генерация координат объекта (функция)
@@ -113,13 +114,14 @@ const getАdvertising = () => {
 };
 
 
+// Массив сгенерированных объектов объявлений
 const createArrayАdvertising = function () {
-  const NUMBER_АDVERTISING = 1;
   const array = [];
   for (let i = 0; i < NUMBER_АDVERTISING; i++) {
-    array[i] = getАdvertising();
+    array.push(getАdvertising());
   }
   return (array);
 }
+
 
 export { createArrayАdvertising, TYPE };
