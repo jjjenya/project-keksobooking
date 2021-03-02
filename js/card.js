@@ -39,13 +39,8 @@ const createElements = function (element) {
 
 
 //   Функция, которая принимает в себя одно объявление и заполняет одну карточку
-const createCard = function (add = similarArray[0]) {                              // В эту функцию нам нужно передать уже сам объект объявления, какой-то один элемент из всего массива объявлений
+const createCard = function (add = similarArray[0]) {
   const newCardElement = cardElement.cloneNode(true);
-
-
-  // Создание карточки объявления
-  const cardFragment = document.createDocumentFragment();
-
 
   // title
   // проверка заполняемости данных
@@ -71,11 +66,11 @@ const createCard = function (add = similarArray[0]) {                           
   featureListElement.appendChild(createElements(features));
 
 
-  //  photo
-  const photoListElement = newCardElement.querySelector('.popup__photos');
-  photoListElement.innerHTML = '';   // Очищение элемента
-  const photos = add.offer.photos;
-  photoListElement.appendChild(createElements(photos));
+  // //  photo
+  // const photoListElement = newCardElement.querySelector('.popup__photos');
+  // photoListElement.innerHTML = '';   // Очищение элемента
+  // const photos = add.offer.photos;
+  // photoListElement.appendChild(createElements(photos));
 
 
   //  description
@@ -84,11 +79,6 @@ const createCard = function (add = similarArray[0]) {                           
 
   //  avatar
   newCardElement.querySelector('.popup__avatar').src = add.author.avatar;
-
-
-
-  //  Заполнение карточки данными
-  cardFragment.appendChild(newCardElement);
 
 
   //  Возврат карточки
