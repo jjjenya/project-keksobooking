@@ -25,18 +25,6 @@ const hideElement = function (className) {
 }
 
 
-// Создание элемента
-const createElements = function (element) {
-  const fragmentElement = document.createDocumentFragment();
-
-  for (let i = 0; i < element.length; i++) {
-    const elements = document.createElement(element[i]);
-    fragmentElement.appendChild(elements);
-  }
-  return fragmentElement;
-}
-
-
 
 //   Функция, которая принимает в себя одно объявление и заполняет одну карточку
 const createCard = function (add = similarArray[0]) {
@@ -55,22 +43,36 @@ const createCard = function (add = similarArray[0]) {
   newCardElement.querySelector('.popup__text--address').textContent = add.offer.address;
   newCardElement.querySelector('.popup__text--price').textContent = add.offer.price + ' ₽/ночь';
   newCardElement.querySelector('.popup__type').textContent = offerTypesMap[add.offer.type];
-  newCardElement.querySelector('.popup__text--capacity').textContent = add.offer.rooms + ' комнаты для ' + add.offer.guests + ' гостей';
+
+  const rooms = add.offer.rooms;
+  const guests = add.offer.guests;
+  newCardElement.querySelector('.popup__text--capacity').textContent = rooms + (rooms === 1 ? ' комнатa для ' : ((rooms === 2 || rooms === 3 || rooms === 4) ? ' комнаты для ' : ' комнат для ')) + guests + (guests === 1 ? ' гостя' : ' гостей');
+
   newCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + add.offer.checkin + ' выезд до ' + add.offer.checkout;
 
 
   //  features
   const featureListElement = newCardElement.querySelector('.popup__features');
   featureListElement.innerHTML = '';   // Очищение элемента
-  const features = add.offer.features;
-  featureListElement.appendChild(createElements(features));
+  for (let i = 0; i < add.offer.features.length; i++) {
+    const featureItem = document.createElement('li');
+    featureItem.classList.add('popup__feature--' + add.offer.features[i], 'popup__feature');
+    featureListElement.appendChild(featureItem);
+  }
 
 
-  // //  photo
-  // const photoListElement = newCardElement.querySelector('.popup__photos');
-  // photoListElement.innerHTML = '';   // Очищение элемента
-  // const photos = add.offer.photos;
-  // photoListElement.appendChild(createElements(photos));
+  //  photos
+  const photoListElement = newCardElement.querySelector('.popup__photos');
+  photoListElement.innerHTML = '';
+  for (let j = 0; j < add.offer.photos.length; j++) {
+    const imageItem = document.createElement('img');
+    imageItem.classList.add('popup__photo');
+    imageItem.setAttribute('src', add.offer.photos[j]);
+    imageItem.setAttribute('width', '45');
+    imageItem.setAttribute('height', '40');
+    imageItem.setAttribute('alt', 'Фотография жилья');
+    photoListElement.appendChild(imageItem);
+  }
 
 
   //  description
