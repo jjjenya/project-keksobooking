@@ -1,14 +1,16 @@
 import './util.js';
 import './data.js';
 import './card.js';
-import './form.js';
 
 
 
 import { createArrayАdvertising } from './data.js';
 import { createCard, mapCanvas } from './card.js';
 
+
+// Массив объектов (рандомных, 10шт)
 const similarArray = createArrayАdvertising();
+
 
 const card = createCard(similarArray[0]);
 
@@ -17,4 +19,4 @@ const card = createCard(similarArray[0]);
 mapCanvas.append(card);
 
 
-// export { similarArray };
+export { similarArray };
