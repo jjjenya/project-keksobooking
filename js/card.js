@@ -1,5 +1,3 @@
-import { similarArray } from './main.js';
-
 //   Сопоставление типов жилья с подписями
 const offerTypesMap = {
   'palace': 'Дворец',
@@ -57,35 +55,63 @@ const createPhotosList = function (photos) {
 
 
 //   Функция, которая принимает в себя одно объявление и заполняет одну карточку
-const createCard = function (item = similarArray[0]) {
+const createCard = function (item) {
   const newCardElement = cardElement.cloneNode(true);
 
   // title
-  // c проверкой заполняемости данных
-  const titleElement = newCardElement.querySelector('.popup__title');
-  if (titleElement) {
-    titleElement.textContent = item.offer.title;
+  if (item.offer.title) {
+    newCardElement.querySelector('.popup__title').textContent = item.offer.title;
   } else {
     hideElement('.popup__title');
   }
 
 
-  newCardElement.querySelector('.popup__text--address').textContent = item.offer.address;
-  newCardElement.querySelector('.popup__text--price').textContent = item.offer.price + ' ₽/ночь';
-  newCardElement.querySelector('.popup__type').textContent = offerTypesMap[item.offer.type];
+  // address
+  if (item.offer.address) {
+    newCardElement.querySelector('.popup__text--address').textContent = item.offer.address;
+  } else {
+    hideElement('.popup__text--address');
+  }
 
+
+  // price
+  if (item.offer.price) {
+    newCardElement.querySelector('.popup__text--price').textContent = item.offer.price + ' ₽/ночь';
+  } else {
+    hideElement('.popup__text--price');
+  }
+
+
+  // type
+  if (item.offer.type) {
+    newCardElement.querySelector('.popup__type').textContent = offerTypesMap[item.offer.type];
+  } else {
+    hideElement('.popup__type');
+  }
+
+
+  // rooms, guests
   const rooms = item.offer.rooms;
   const guests = item.offer.guests;
-  newCardElement.querySelector('.popup__text--capacity').textContent = rooms + (rooms === 1 ? ' комнатa для ' : ((rooms === 2 || rooms === 3 || rooms === 4) ? ' комнаты для ' : ' комнат для ')) + guests + (guests === 1 ? ' гостя' : ' гостей');
+  if (item.offer.rooms && item.offer.guests) {
+    newCardElement.querySelector('.popup__text--capacity').textContent = rooms + (rooms === 1 ? ' комнатa для ' : ((rooms === 2 || rooms === 3 || rooms === 4) ? ' комнаты для ' : ' комнат для ')) + guests + (guests === 1 ? ' гостя' : ' гостей');
+  } else {
+    hideElement('.popup__text--capacity');
+  }
 
-  newCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + item.offer.checkin + ' выезд до ' + item.offer.checkout;
+
+  // checkin, checkout
+  if (item.offer.time) {
+    newCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + item.offer.checkin + ' выезд до ' + item.offer.checkout;
+  } else {
+    hideElement('.popup__text--time');
+  }
 
 
   //  features
-  // c проверкой заполняемости данных
   const featureListElement = newCardElement.querySelector('.popup__features');
   featureListElement.innerHTML = '';
-  if (item.offer.features) {
+  if (item.offer.features && item.offer.features.length) {
     featureListElement.appendChild(createFeatureList(item.offer.features));
   } else {
     hideElement('.popup__features');
@@ -93,10 +119,9 @@ const createCard = function (item = similarArray[0]) {
 
 
   //  photos
-  // c проверкой заполняемости данных
   const photoListElement = newCardElement.querySelector('.popup__photos');
   photoListElement.innerHTML = '';   // Очищение элемента
-  if (item.offer.photos) {
+  if (item.offer.photos && item.offer.photos.length) {
     photoListElement.appendChild(createPhotosList(item.offer.photos));
   } else {
     hideElement('.popup__photos');
@@ -104,11 +129,19 @@ const createCard = function (item = similarArray[0]) {
 
 
   //  description
-  newCardElement.querySelector('.popup__description').textContent = item.offer.description;
+  if (item.offer.description) {
+    newCardElement.querySelector('.popup__description').textContent = item.offer.description;
+  } else {
+    hideElement('.popup__description');
+  }
 
 
   //  avatar
-  newCardElement.querySelector('.popup__avatar').src = item.author.avatar;
+  if (item.offer.avatar) {
+    newCardElement.querySelector('.popup__avatar').src = item.author.avatar;
+  } else {
+    hideElement('.popup__avatar');
+  }
 
 
 
