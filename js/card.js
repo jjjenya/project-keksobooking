@@ -25,7 +25,7 @@ const hideElement = function (className) {
 }
 
 
-// features
+// Формирование перечня features
 const createFeatureList = function (features) {
   const fragmentElement = document.createDocumentFragment();
 
@@ -38,7 +38,7 @@ const createFeatureList = function (features) {
 }
 
 
-// функция photos
+// Формирование перечня photos
 const createPhotosList = function (photos) {
   const fragmentElement = document.createDocumentFragment();
 
@@ -55,13 +55,13 @@ const createPhotosList = function (photos) {
 }
 
 
-//   Функция, которая принимает в себя одно объявление и заполняет одну карточку
 
+//   Функция, которая принимает в себя одно объявление и заполняет одну карточку
 const createCard = function (item = similarArray[0]) {
   const newCardElement = cardElement.cloneNode(true);
 
   // title
-  // проверка заполняемости данных
+  // c проверкой заполняемости данных
   const titleElement = newCardElement.querySelector('.popup__title');
   if (titleElement) {
     titleElement.textContent = item.offer.title;
@@ -82,6 +82,7 @@ const createCard = function (item = similarArray[0]) {
 
 
   //  features
+  // c проверкой заполняемости данных
   const featureListElement = newCardElement.querySelector('.popup__features');
   featureListElement.innerHTML = '';
   if (item.offer.features) {
@@ -91,16 +92,8 @@ const createCard = function (item = similarArray[0]) {
   }
 
 
-  // //  features
-  // const featureListElement = newCardElement.querySelector('.popup__features');
-  // featureListElement.innerHTML = '';   // Очищение элемента
-  // for (let i = 0; i < add.offer.features.length; i++) {
-  //   const listItem = document.createElement('li');
-  //   listItem.classList.add('popup__feature--' + add.offer.features[i], 'popup__feature');
-  //   featureListElement.appendChild(listItem);
-  // }
-
   //  photos
+  // c проверкой заполняемости данных
   const photoListElement = newCardElement.querySelector('.popup__photos');
   photoListElement.innerHTML = '';   // Очищение элемента
   if (item.offer.photos) {
@@ -108,23 +101,6 @@ const createCard = function (item = similarArray[0]) {
   } else {
     hideElement('.popup__photos');
   }
-  // for (let j = 0; j < add.offer.photos.length; j++) {
-  //   const imageItem = document.createElement('img');
-  //   imageItem.classList.add('popup__photo');
-  //   imageItem.setAttribute('src', add.offer.photos[j]);
-  //   imageItem.setAttribute('width', '45');
-  //   imageItem.setAttribute('height', '40');
-  //   imageItem.setAttribute('alt', 'Фотография жилья');
-  //   photoListElement.appendChild(imageItem);
-  // }
-
-
-  // //  photos
-  // const photoListElement = newCardElement.querySelector('.popup__photos');
-  // photoListElement.innerHTML = '';
-  // if (add.offer.futures) {
-  //   featureListElement.appendChild(createPhotosList(add.offer.photos));
-  // }
 
 
   //  description
@@ -133,6 +109,7 @@ const createCard = function (item = similarArray[0]) {
 
   //  avatar
   newCardElement.querySelector('.popup__avatar').src = item.author.avatar;
+
 
 
   //  Возврат карточки
