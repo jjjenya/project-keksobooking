@@ -72,7 +72,6 @@ const Location = {
 const NUMBER_AFTER_COMMA = 5;
 
 
-
 //   Генерация координат объекта (функция)
 const getRandomСoordinates = function (x, y) {
   x = Number(getRandomLocation(Location.X.MIN, Location.X.MAX, NUMBER_AFTER_COMMA));
@@ -112,4 +111,15 @@ const getАdvertising = () => {
   };
 };
 
-getАdvertising();
+
+// Массив сгенерированных объектов объявлений
+const createArrayАdvertising = function (numberАdvertising) {
+  const array = [];
+  for (let i = 0; i < numberАdvertising; i++) {
+    array.push(getАdvertising());
+  }
+  return (array);
+}
+
+
+export { createArrayАdvertising, TYPE };
