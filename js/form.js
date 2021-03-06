@@ -1,6 +1,4 @@
 // Форма объявления
-// const formNotice = document.querySelector('notice');
-
 
 
 //   Сопоставление типов жилья и минимальной стоимости
@@ -16,9 +14,6 @@ const formPrice = document.querySelector('#price');
 
 // обязательность заполнения поля
 formPrice.setAttribute('required', '');
-
-
-// document.getElementById('price').value = '';
 
 
 //   Изменение значения placeholder поля "Цена за ночь" при изменении поля "Тип жилья"
@@ -48,36 +43,27 @@ formTypeSelect.addEventListener('change', function () {
 });
 
 
-// // Функция очистки поля placeholder
+// если данные ввода в поле "Цена за ночь" некорректы
 
-// function clearThis(valuePlaceholder) {
-//   if (valuePlaceholder.value == 5000) {
-//     valuePlaceholder.value = 100000000000;
-//   }
-// }
+formPrice.addEventListener('change', function () {
 
-
-// formPrice.addEventListener('change', function () {
-
-//   formPrice.onblur = function () {
-//     if ((formTypeSelect.value === 'flat') && (this.value < formTypesPrice.flat)) {
-//       alert('Минимальное значение -' + formTypesPrice.flat);    // информирование об ошибке
-//       formPrice.focus();    // возврат фокуса обратно
-//     } else {
-//       if ((formTypeSelect.value === 'bungalow') && (this.value < formTypesPrice.bungalow)) {
-//         alert('Минимальное значение - ' + formTypesPrice.bungalow), formTypesPrice.bungalow;
-//         formPrice.focus();    // возврат фокуса обратно
-//       } else {
-//         formPrice.value;
-//       }
-//     }
-//   }
-// });
+  formPrice.onblur = function () {
+    if ((formTypeSelect.value === 'flat') && (this.value < formTypesPrice.flat)) {
+      alert('Минимальное значение -' + formTypesPrice.flat);    // информирование об ошибке
+      formPrice.focus();    // возврат фокуса обратно
+    } else {
+      if ((formTypeSelect.value === 'bungalow') && (this.value < formTypesPrice.bungalow)) {
+        alert('Минимальное значение - ' + formTypesPrice.bungalow), formTypesPrice.bungalow;
+        formPrice.focus();    // возврат фокуса обратно
+      } else {
+        formPrice.value;
+      }
+    }
+  }
+});
 
 
 
-
-//  *********************************   Въезд - выезд   **************************************
 
 // Изменение взаимозависимых полей "Время заезда и выезда"
 const timein = document.querySelector('#timein');
@@ -89,4 +75,3 @@ timein.addEventListener('change', function () {
 timeout.addEventListener('change', function () {
   timein.value = timeout.value;
 });
-
