@@ -3,6 +3,7 @@
 
 
 const formTitle = document.querySelector('#title');
+const formAddress = document.querySelector('#address');
 const formPrice = document.querySelector('#price');
 const formTypeSelect = document.querySelector('#type');
 const formTimeIn = document.querySelector('#timein');
@@ -68,6 +69,9 @@ formTypeSelect.options[2].setAttribute('selected', '');
 formGuestNumber.options[0].removeAttribute('selected');
 formGuestNumber.options[2].setAttribute('selected', '');
 
+
+//   запрет редактирования поля  "Адрес (координаты)"
+formAddress.setAttribute('readonly', '');
 
 
 //   Изменение значения placeholder поля "Цена за ночь, руб." при изменении поля "Тип жилья"
