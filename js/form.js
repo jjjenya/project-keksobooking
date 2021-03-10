@@ -55,9 +55,9 @@ formTitle.setAttribute('maxlength', 100);
 formPrice.setAttribute('max', 1000000);
 
 
-//   изменение type для поля "Ваша фотография (для карты)", "Фотография жилья"
-formAvatar.setAttribute('type', 'image');
-formFotoPlace.setAttribute('type', 'image');
+//   ограничение на типы файлов для полей "Ваша фотография (для карты)", "Фотография жилья"
+formAvatar.setAttribute('accept', 'image/png, image/jpeg');
+formFotoPlace.setAttribute('accept', 'image/png, image/jpeg');
 
 
 //   поправка selected в соответствии с ТЗ
