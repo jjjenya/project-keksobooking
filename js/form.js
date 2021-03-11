@@ -2,15 +2,10 @@
 
 
 
-const formTitle = document.querySelector('#title');
-const formAddress = document.querySelector('#address');
 const formPrice = document.querySelector('#price');
 const formTypeSelect = document.querySelector('#type');
 const formTimeIn = document.querySelector('#timein');
 const formTimeOut = document.querySelector('#timeout');
-const formAvatar = document.querySelector('#avatar');
-const formFotoPlace = document.querySelector('#images');
-const formGuestNumber = document.querySelector('#capacity');
 
 
 
@@ -44,43 +39,11 @@ const placeTypePrice = {
 }
 
 
-
-//   обязательность заполнения полей "Заголовок объявления", "Цена за ночь, руб."
-formTitle.setAttribute('required', '');
-formPrice.setAttribute('required', '');
-
-
-//   установление границ значений: "Заголовок объявления" - min, max; "Цена за ночь, руб." - max
-formTitle.setAttribute('minlength', 30);
-formTitle.setAttribute('maxlength', 100);
-formPrice.setAttribute('max', 1000000);
-
-
-//   ограничение на типы файлов для полей "Ваша фотография (для карты)", "Фотография жилья"
-formAvatar.setAttribute('accept', 'image/png, image/jpeg');
-formFotoPlace.setAttribute('accept', 'image/png, image/jpeg');
-
-
-//   поправка selected в соответствии с ТЗ
-formTypeSelect.options[1].removeAttribute('selected');
-formTypeSelect.options[2].setAttribute('selected', '');
-
-
-formGuestNumber.options[0].removeAttribute('selected');
-formGuestNumber.options[2].setAttribute('selected', '');
-
-
-//   запрет редактирования поля  "Адрес (координаты)"
-formAddress.setAttribute('readonly', '');
-
-
 //   Изменение значения placeholder поля "Цена за ночь, руб." при изменении поля "Тип жилья"
 formTypeSelect.addEventListener('change', () => {
   formPrice.placeholder = placeTypePrice[formTypeSelect.value].PLACEHOLDER;
   formPrice.min = placeTypePrice[formTypeSelect.value].PRICE_MIN;
 })
-
-
 
 //   Изменение взаимозависимых полей "Время заезда и выезда"
 formTimeIn.addEventListener('change', function () {
