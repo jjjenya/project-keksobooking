@@ -16,6 +16,10 @@ const maxTitleLength = formTitle.getAttribute('maxlength');
 
 const maxPrice = formPrice.getAttribute('max');
 
+const formAdForm = document.querySelector('.ad-form');
+const formAdFormElements = formAdForm.querySelectorAll('fieldset');
+const formMapFilters = document.querySelector('.map__filters');
+const formMapFiltersElements = formMapFilters.querySelectorAll('.map__filter');
 
 
 //   Перечисление типов жилья
@@ -156,3 +160,33 @@ formPrice.addEventListener('change', () => {
 
   formPrice.reportValidity();
 });
+
+
+
+//    Функция деактивации формы
+
+const setFormInactive =() => {
+  formAdForm.classList.add('ad-form--disabled');
+  formAdFormElements.forEach((elem) => {
+    elem.setAttribute('disabled','disabled');
+  });
+  formMapFilters.classList.add('map__filters--disabled');
+  formMapFiltersElements.forEach((elem) => {
+    elem.setAttribute('disabled','disabled');
+  });
+}
+
+
+//    Функция активации формы
+const setFormActive =() => {
+  formAdForm.classList.remove('ad-form--disabled');
+  formAdFormElements.forEach((elem) => {
+    elem.removeAttribute('disabled','disabled');
+  });
+  formMapFilters.classList.remove('map__filters--disabled');
+  formMapFiltersElements.forEach((elem) => {
+    elem.removeAttribute('disabled','disabled');
+  });
+}
+
+export { setFormInactive, setFormActive };

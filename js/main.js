@@ -5,18 +5,20 @@ import './form.js';
 import './map.js';
 
 
-// import { createArrayАdvertising } from './data.js';
-// import { createCard /*, mapCanvas */ } from './card.js';
-
-// const NUMBER_АDVERTISING = 10;
-
-// // Массив рандомных объектов
-// const similarArray = createArrayАdvertising(NUMBER_АDVERTISING);
+import { createArrayАdvertising } from './data.js';
+import { createCard /*, mapCanvas */ } from './card.js';
 
 
-// const card = createCard(similarArray[0]);
+const NUMBER_АDVERTISING = 10;
+
+// Массив рандомных объектов
+const similarArray = createArrayАdvertising(NUMBER_АDVERTISING);
+
+
+const card = createCard(similarArray[0]);
 
 
 // // Вставка сформированной карточки
 // mapCanvas.append(card);
 
+export {card, similarArray }
