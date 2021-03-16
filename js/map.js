@@ -1,28 +1,73 @@
 
 import { similarArray } from './main.js';
 import { createCard } from './card.js';
-import { setFormInactive, setFormActive } from './form.js';
+import { setFormActive, setFormDeactive } from './form.js';
+import { setFiltersActive, setFiltersDeactive } from './filtr.js';
+
+
 
 const formAddressField = document.querySelector('#address');
+
 const NUMBER_AFTER_COMMA = 5;
 
+
+//   Координаты по умолчанию - Токио
 const defaultCoordinates = {
   LAT: 35.68950,
   LNG: 139.69171,
 }
 
-// Деактивизируем форму
-setFormInactive()
 
-// Карта
+//   Заполнение поля "Адрес (координаты)"
+const inputFormAddressField = function (lat, lng) {
+  formAddressField.value = lat + ',' + lng;
+}
+
+
+//   Иконка маркера красного
+const MAIN_PIN_ICON = L.icon({
+  iconUrl: './img/main-pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+});
+
+
+//   Иконка маркера синего
+const PIN_ICON = L.icon({
+  iconUrl: './img/pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+});
+
+
+
+
+//   Активное состояние Страницы
+const activatePage = () => {
+  setFormActive();
+  setFiltersActive();
+  inputFormAddressField(defaultCoordinates.LAT, defaultCoordinates.LNG);   // Заполнения поля "Адрес (координаты)" по умолчанию координатами центра Токио
+}
+
+
+//    Неактивное состояние страницы
+const deactivatePage = () => {
+  setFormDeactive();
+  setFiltersDeactive();
+}
+
+
+
+
+
+// // Карта
 /* global L:readonly */
 
 const map = L
   .map('map-canvas')
 
   .on('load', () => {
-    alert('Карта инициализирована')
-    setFormActive()   // активизируем форму
+    activatePage()
   })
 
   .setView({
@@ -40,12 +85,6 @@ L.tileLayer(
 ).addTo(map);
 
 
-//   Загрузка иконки маркера красного
-const mainPinIcon = L.icon({
-  iconUrl: './img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
-});
 
 
 //   Расположение маркера красного
@@ -56,39 +95,26 @@ const mainPinMarker = L.marker(
   },
   {
     draggable: true,
-    icon: mainPinIcon,
+    icon: MAIN_PIN_ICON,
   },
 );
 mainPinMarker.addTo(map);
 
 
-//   Заполнения поля "Адрес (координаты)" по умолчанию - центр Токио
-formAddressField.value = mainPinMarker.getLatLng().lat.toFixed(NUMBER_AFTER_COMMA) + ', ' + mainPinMarker.getLatLng().lng.toFixed(NUMBER_AFTER_COMMA);
-
-
-//   Заполнение поля "Адрес (координаты)" новыми координатами после окончания передвижения пользователем маркера
+// Заполнение поля "Адрес (координаты)" новыми координатами после окончания передвижения пользователем маркера
 mainPinMarker.on('moveend', (evt) => {
-  formAddressField.value = evt.target.getLatLng().lat.toFixed(NUMBER_AFTER_COMMA) + ', ' + evt.target.getLatLng().lng.toFixed(NUMBER_AFTER_COMMA);
+  inputFormAddressField(evt.target.getLatLng().lat.toFixed(NUMBER_AFTER_COMMA), evt.target.getLatLng().lng.toFixed(NUMBER_AFTER_COMMA));
 });
 
 
-
 similarArray.forEach(({ author, offer, location }) => {
-
-  // Загрузка иконки маркера синего
-  const pinIcon = L.icon({
-    iconUrl: './img/pin.svg',
-    iconSize: [52, 52],
-    iconAnchor: [26, 52],
-  });
-
   const marker = L.marker({
     lat: location.X,
     lng: location.Y,
   },
   {
     draggable: true,
-    icon: pinIcon,
+    icon: PIN_ICON,
   });
 
 
@@ -96,9 +122,12 @@ similarArray.forEach(({ author, offer, location }) => {
   marker
     .addTo(map)
     .bindPopup(
-      createCard({author, offer}),
+      createCard({ author, offer }),
       {
         keepInView: true,
       },
     );
 });
+
+
+export { deactivatePage };

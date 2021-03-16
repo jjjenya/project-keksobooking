@@ -3,10 +3,14 @@ import './data.js';
 import './card.js';
 import './form.js';
 import './map.js';
+import './filtr.js';
+
 
 
 import { createArrayАdvertising } from './data.js';
-import { createCard /*, mapCanvas */ } from './card.js';
+import { createCard } from './card.js';
+import { deactivatePage  } from './map.js';
+
 
 
 const NUMBER_АDVERTISING = 10;
@@ -18,7 +22,6 @@ const similarArray = createArrayАdvertising(NUMBER_АDVERTISING);
 const card = createCard(similarArray[0]);
 
 
-// // Вставка сформированной карточки
-// mapCanvas.append(card);
+deactivatePage();
 
 export {card, similarArray }

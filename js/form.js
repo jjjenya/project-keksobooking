@@ -1,6 +1,5 @@
+
 // Форма объявления
-
-
 
 const formPrice = document.querySelector('#price');
 const formTypeSelect = document.querySelector('#type');
@@ -8,18 +7,18 @@ const formTimeIn = document.querySelector('#timein');
 const formTimeOut = document.querySelector('#timeout');
 
 const formTitle = document.querySelector('#title');
-const formGuestNumber = document.querySelector('#capacity');
-const formRoomNumber = document.querySelector('#room_number');
-
-const minTitleLength = formTitle.getAttribute('minlength');
-const maxTitleLength = formTitle.getAttribute('maxlength');
-
-const maxPrice = formPrice.getAttribute('max');
+const formGuestSelect = document.querySelector('#capacity');
+const formRoomsSelect = document.querySelector('#room_number');
 
 const formAdForm = document.querySelector('.ad-form');
 const formAdFormElements = formAdForm.querySelectorAll('fieldset');
-const formMapFilters = document.querySelector('.map__filters');
-const formMapFiltersElements = formMapFilters.querySelectorAll('.map__filter');
+
+const MIN_TITLE_LENGTH = 30;
+const MAX_TITLE_LENGTH = 100;
+
+const MAX_PRICE = 1000000;
+
+
 
 
 //   Перечисление типов жилья
@@ -51,7 +50,6 @@ const placeTypePrice = {
   },
 }
 
-
 //   Перечисление типов комнат
 const ROOM = {
   one: 1,
@@ -62,14 +60,12 @@ const ROOM = {
 
 
 //   Типы комнат с вариантами количества мест
-const GUEST_ROOM = {
-  [ROOM.one]: [1],
-  [ROOM.two]: [2, 1],
-  [ROOM.three]: [3, 2, 1],
-  [ROOM.hundred]: [0],
+const ROOM_GUEST = {
+  [ROOM.one]: 'для 1 гостя',
+  [ROOM.two]: 'для 1-2 гостей',
+  [ROOM.three]: 'для 1-3 гостей',
+  [ROOM.hundred]: 'не для гостей',
 }
-
-
 
 //   Изменение значения placeholder поля "Цена за ночь, руб." при изменении поля "Тип жилья"
 formTypeSelect.addEventListener('change', () => {
@@ -86,107 +82,139 @@ formTimeOut.addEventListener('change', function () {
 });
 
 
+// // Поле "Заголовок объявления"
+//   обработчик
+const onFormTitle = (evt) => {
+  const valueLength = evt.currentTarget.value.length;
 
-
-//   Изменение поля "Количество мест" при изменении поля "Количество комнат"
-
-const clone = formGuestNumber.cloneNode(true);   // Клонирование динамического списка
-const clonedGuestOptions = clone.getElementsByTagName('option');   //   Определение живой коллекции элементов
-
-
-//   Функция для пересборки динамического списка
-const rebuildDynamicSelectOptions = (select1, select2, clonedOptions) => {
-
-  const selectedOption = select1.options[select1.selectedIndex].value;
-  const source = GUEST_ROOM[selectedOption];
-
-  // Удаление всех элементов динамического списка
-  while (select2.options.length) {
-    select2.remove(0);
-  }
-
-  // Перебор клонированных элементов списка
-  for (let i = 0; i < clonedOptions.length; i++) {
-    const option = clonedOptions[i];
-
-    for (let j = 0; j < source.length; j++) {
-      if (source[j] == option.value) {
-        select2.appendChild(option.cloneNode(true));   // клонирование в динамически создаваемый список
-      }
-    }
-  }
-
-  // Событие change выбранного select
-  const incident = document.createEvent('HTMLEvents');
-  incident.event('change', { 'bubbles': true, 'cancelable': false });
-  select2.dispatchEvent(incident);
-};
-
-
-//   Изменение комплектации поля "Количество мест" при изменении поля "Количество комнат"
-formRoomNumber.addEventListener('change', () => {
-  rebuildDynamicSelectOptions(formRoomNumber, formGuestNumber, clonedGuestOptions);
-});
-
-
-
-//   Валидация поля "Заголовок объявления"
-formTitle.addEventListener('input', () => {
-  const valueLength = formTitle.value.length;
-
-  if (valueLength < minTitleLength) {
-    formTitle.setCustomValidity('Минимальная длина - ' + minTitleLength + ' симв.: осталось ещё ' + (minTitleLength - valueLength));
-  } else if (valueLength > maxTitleLength) {
-    formTitle.setCustomValidity('Удалите лишние ' + (valueLength - maxTitleLength) + ' симв.');
+  if (valueLength < MIN_TITLE_LENGTH) {
+    formTitle.setCustomValidity('Минимальная длина - ' + MIN_TITLE_LENGTH + ' симв.: осталось ещё ' + (MIN_TITLE_LENGTH - valueLength));
+  } else if (valueLength > MAX_TITLE_LENGTH) {
+    formTitle.setCustomValidity('Удалите лишние ' + (valueLength - MAX_TITLE_LENGTH) + ' симв.');
   } else {
     formTitle.setCustomValidity('');
   }
 
   formTitle.reportValidity();
-});
+};
+
+//   слушатель
+formTitle.addEventListener('input', onFormTitle);
 
 
-//   Валидация поля "Цена за ночь, руб."
-formPrice.addEventListener('change', () => {
-  const valuePrice = formPrice.value;
+
+// // Поле "Цена за ночь, руб."
+//   обработчик
+const onFormPrice = (evt) => {
+  const valuePrice = evt.currentTarget.value;
 
   if (valuePrice < (placeTypePrice[formTypeSelect.value].PRICE_MIN)) {
     formPrice.setCustomValidity('Минимальная цена ночь - ' + placeTypePrice[formTypeSelect.value].PRICE_MIN + ': увеличьте вводимую цену');
-  } else if (valuePrice > maxPrice) {
-    formPrice.setCustomValidity('Максимальная цена ночь - ' + maxPrice + ': уменьшите вводимую цену');
+  } else if (valuePrice > MAX_PRICE) {
+    formPrice.setCustomValidity('Максимальная цена ночь - ' + MAX_PRICE + ': уменьшите вводимую цену');
   } else {
     formPrice.setCustomValidity('');
   }
 
   formPrice.reportValidity();
-});
+}
+
+//   слушатель
+formPrice.addEventListener('change', onFormPrice);
 
 
 
-//    Функция деактивации формы
+// // Поле "Количество комнат"
+const onRoomsGuests = (evt) => {
+  const valueRooms = Number(evt.currentTarget.value);
 
-const setFormInactive =() => {
+  if (valueRooms === ROOM.one) {
+    formGuestSelect.setCustomValidity(ROOM_GUEST[ROOM.one]);
+  } else if (valueRooms === ROOM.two) {
+    formGuestSelect.setCustomValidity(ROOM_GUEST[ROOM.two]);
+  } else if (valueRooms === ROOM.three) {
+    formGuestSelect.setCustomValidity(ROOM_GUEST[ROOM.three]);
+  } else if (valueRooms === ROOM.hundred) {
+    formGuestSelect.setCustomValidity(ROOM_GUEST[ROOM.hundred]);
+  } else {
+    formGuestSelect.setCustomValidity('');
+  }
+
+  formGuestSelect.reportValidity();
+}
+
+//   слушатель
+formRoomsSelect.addEventListener('change', onRoomsGuests);
+
+
+
+// // Поле "Количество мест"
+const onGuestsRooms = (evt) => {
+  const valueGuests = Number(evt.currentTarget.value);
+
+  if (valueGuests === 0) {
+    formRoomsSelect.setCustomValidity(ROOM.hundred + ' комнат');
+  } else if (valueGuests === 1) {
+    formRoomsSelect.setCustomValidity(ROOM.one + ' комната');
+  } else if (valueGuests === 2) {
+    formRoomsSelect.setCustomValidity(ROOM.one + ' комната, ' + ROOM.two + ' комнаты');
+  } else if (valueGuests === 3) {
+    formRoomsSelect.setCustomValidity(ROOM.one + ' комната, ' + ROOM.two + ' комнаты, ' + ROOM.three +' комнаты');
+  } else {
+    formRoomsSelect.setCustomValidity('');
+  }
+
+  formRoomsSelect.reportValidity();
+}
+
+//   слушатель
+formGuestSelect.addEventListener('change', onGuestsRooms);
+
+
+// // **********   ВАРИАНТ 2 (по полям "Количество комнат", "Количество мест") ********************
+// const onGuestsRooms = (evt) => {
+//   const roomsValue = Number(evt.currentTarget.value);
+//   const guestsValue = Number(evt.currentTarget.value);
+
+//   if (roomsValue === 1 && guestsValue !== 1) {
+//     formGuestSelect.setCustomValidity('для 1 гостя');
+//   } else if (roomsValue === 2 && (guestsValue === 3 || guestsValue === 0)) {
+//     formGuestSelect.setCustomValidity('для 1-2 гостей');
+//   } else if (roomsValue === 3 && guestsValue === 0) {
+//     formGuestSelect.setCustomValidity('для 1-3 гостей');
+//   } else if (roomsValue === 100 && guestsValue !== 0) {
+//     formGuestSelect.setCustomValidity('не для гостей');
+//   } else {
+//     formGuestSelect.setCustomValidity('');
+//   }
+
+//   formGuestSelect.reportValidity();
+// };
+
+// //   слушатель
+// formRoomsSelect.addEventListener('change', onGuestsRooms);
+// formGuestSelect.addEventListener('change', onGuestsRooms);
+
+
+
+
+//   Активное состояние Формы
+const setFormActive = () => {
   formAdForm.classList.add('ad-form--disabled');
   formAdFormElements.forEach((elem) => {
-    elem.setAttribute('disabled','disabled');
-  });
-  formMapFilters.classList.add('map__filters--disabled');
-  formMapFiltersElements.forEach((elem) => {
-    elem.setAttribute('disabled','disabled');
+    elem.disabled = false;
   });
 }
 
 
-//    Функция активации формы
-const setFormActive =() => {
+//   Неактивное состояние Формы
+const setFormDeactive = () => {
   formAdForm.classList.remove('ad-form--disabled');
   formAdFormElements.forEach((elem) => {
-    elem.removeAttribute('disabled','disabled');
-  });
-  formMapFilters.classList.remove('map__filters--disabled');
-  formMapFiltersElements.forEach((elem) => {
-    elem.removeAttribute('disabled','disabled');
+    elem.disabled = true;
   });
 }
 
-export { setFormInactive, setFormActive };
+
+
+export { setFormActive, setFormDeactive };
