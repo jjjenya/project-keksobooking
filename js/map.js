@@ -63,11 +63,9 @@ const deactivatePage = () => {
 // // Карта
 /* global L:readonly */
 
-
+const map = L.map('map-canvas');
 
 const initMap = () => {
-  const map = L.map('map-canvas');
-
   map.on('load', () => {
     activatePage();
   })
@@ -100,7 +98,7 @@ const mainPinMarker = L.marker(
     icon: MAIN_PIN_ICON,
   },
 );
-// mainPinMarker.addTo(map);
+mainPinMarker.addTo(map);
 
 
 // Заполнение поля "Адрес (координаты)" новыми координатами после окончания передвижения пользователем маркера
@@ -123,7 +121,7 @@ similarArray.forEach(({ author, offer, location }) => {
 
 
   marker
-    // .addTo(map)
+    .addTo(map)
     .bindPopup(
       createCard({ author, offer }),
       {
