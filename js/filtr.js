@@ -6,7 +6,7 @@ const formMapFiltersElements = formMapFilters.querySelectorAll('.map__filter');
 const setFiltersActive = () => {
   formMapFilters.classList.add('map__filters--disabled');
   formMapFiltersElements.forEach((elem) => {
-    elem.disabled = true;
+    elem.setAttribute('disabled', true);
   });
 }
 
@@ -15,7 +15,7 @@ const setFiltersActive = () => {
 const setFiltersDeactive = () => {
   formMapFilters.classList.remove('map__filters--disabled');
   formMapFiltersElements.forEach((elem) => {
-    elem.disabled = false;
+    elem.setAttribute('disabled', true);
   });
 }
 

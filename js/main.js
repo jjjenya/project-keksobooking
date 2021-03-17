@@ -9,7 +9,7 @@ import './filtr.js';
 
 import { createArrayАdvertising } from './data.js';
 import { createCard } from './card.js';
-import { deactivatePage  } from './map.js';
+import { deactivatePage, initMap } from './map.js';
 
 
 
@@ -23,5 +23,6 @@ const card = createCard(similarArray[0]);
 
 
 deactivatePage();
+initMap();
 
 export {card, similarArray }

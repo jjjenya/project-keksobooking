@@ -12,14 +12,14 @@ const NUMBER_AFTER_COMMA = 5;
 
 
 //   Координаты по умолчанию - Токио
-const defaultCoordinates = {
+const DefaultCoordinates = {
   LAT: 35.68950,
   LNG: 139.69171,
 }
 
 
 //   Заполнение поля "Адрес (координаты)"
-const inputFormAddressField = function (lat, lng) {
+const setFormAddressField = function (lat, lng) {
   formAddressField.value = lat + ',' + lng;
 }
 
@@ -46,7 +46,7 @@ const PIN_ICON = L.icon({
 const activatePage = () => {
   setFormActive();
   setFiltersActive();
-  inputFormAddressField(defaultCoordinates.LAT, defaultCoordinates.LNG);   // Заполнения поля "Адрес (координаты)" по умолчанию координатами центра Токио
+  setFormAddressField(DefaultCoordinates.LAT, DefaultCoordinates.LNG);   // Заполнения поля "Адрес (координаты)" по умолчанию координатами центра Токио
 }
 
 
@@ -63,48 +63,51 @@ const deactivatePage = () => {
 // // Карта
 /* global L:readonly */
 
-const map = L
-  .map('map-canvas')
 
-  .on('load', () => {
-    activatePage()
+
+const initMap = () => {
+  const map = L.map('map-canvas');
+
+  map.on('load', () => {
+    activatePage();
   })
 
-  .setView({
-    lat: defaultCoordinates.LAT,
-    lng: defaultCoordinates.LNG,
+  map.setView({
+    lat: DefaultCoordinates.LAT,
+    lng: DefaultCoordinates.LNG,
   }, 10);
 
 
-//   Создание слоя карты
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
-
+  //   Создание слоя карты
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  ).addTo(map);
+}
 
 
 
 //   Расположение маркера красного
 const mainPinMarker = L.marker(
   {
-    lat: defaultCoordinates.LAT,
-    lng: defaultCoordinates.LNG,
+    lat: DefaultCoordinates.LAT,
+    lng: DefaultCoordinates.LNG,
   },
   {
     draggable: true,
     icon: MAIN_PIN_ICON,
   },
 );
-mainPinMarker.addTo(map);
+// mainPinMarker.addTo(map);
 
 
 // Заполнение поля "Адрес (координаты)" новыми координатами после окончания передвижения пользователем маркера
 mainPinMarker.on('moveend', (evt) => {
-  inputFormAddressField(evt.target.getLatLng().lat.toFixed(NUMBER_AFTER_COMMA), evt.target.getLatLng().lng.toFixed(NUMBER_AFTER_COMMA));
+  setFormAddressField(evt.target.getLatLng().lat.toFixed(NUMBER_AFTER_COMMA), evt.target.getLatLng().lng.toFixed(NUMBER_AFTER_COMMA));
 });
+
 
 
 similarArray.forEach(({ author, offer, location }) => {
@@ -120,7 +123,7 @@ similarArray.forEach(({ author, offer, location }) => {
 
 
   marker
-    .addTo(map)
+    // .addTo(map)
     .bindPopup(
       createCard({ author, offer }),
       {
@@ -130,4 +133,4 @@ similarArray.forEach(({ author, offer, location }) => {
 });
 
 
-export { deactivatePage };
+export { deactivatePage, initMap };

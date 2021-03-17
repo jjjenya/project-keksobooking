@@ -8,7 +8,7 @@ const formTimeOut = document.querySelector('#timeout');
 
 const formTitle = document.querySelector('#title');
 const formGuestSelect = document.querySelector('#capacity');
-const formRoomsSelect = document.querySelector('#room_number');
+const formRoomSelect = document.querySelector('#room_number');
 
 const formAdForm = document.querySelector('.ad-form');
 const formAdFormElements = formAdForm.querySelectorAll('fieldset');
@@ -50,22 +50,6 @@ const placeTypePrice = {
   },
 }
 
-//   Перечисление типов комнат
-const ROOM = {
-  one: 1,
-  two: 2,
-  three: 3,
-  hundred: 100,
-};
-
-
-//   Типы комнат с вариантами количества мест
-const ROOM_GUEST = {
-  [ROOM.one]: 'для 1 гостя',
-  [ROOM.two]: 'для 1-2 гостей',
-  [ROOM.three]: 'для 1-3 гостей',
-  [ROOM.hundred]: 'не для гостей',
-}
 
 //   Изменение значения placeholder поля "Цена за ночь, руб." при изменении поля "Тип жилья"
 formTypeSelect.addEventListener('change', () => {
@@ -127,15 +111,12 @@ formPrice.addEventListener('change', onFormPrice);
 // // Поле "Количество комнат"
 const onRoomsGuests = (evt) => {
   const valueRooms = Number(evt.currentTarget.value);
+  const valueGuests = Number(formGuestSelect.value);
 
-  if (valueRooms === ROOM.one) {
-    formGuestSelect.setCustomValidity(ROOM_GUEST[ROOM.one]);
-  } else if (valueRooms === ROOM.two) {
-    formGuestSelect.setCustomValidity(ROOM_GUEST[ROOM.two]);
-  } else if (valueRooms === ROOM.three) {
-    formGuestSelect.setCustomValidity(ROOM_GUEST[ROOM.three]);
-  } else if (valueRooms === ROOM.hundred) {
-    formGuestSelect.setCustomValidity(ROOM_GUEST[ROOM.hundred]);
+  if (valueRooms === 100 && valueGuests !== 0) {
+    formGuestSelect.setCustomValidity('не для гостей');
+  } else if (valueRooms < valueGuests) {
+    formGuestSelect.setCustomValidity('количество гостей не должно превышать -' + valueRooms);
   } else {
     formGuestSelect.setCustomValidity('');
   }
@@ -144,45 +125,43 @@ const onRoomsGuests = (evt) => {
 }
 
 //   слушатель
-formRoomsSelect.addEventListener('change', onRoomsGuests);
+formRoomSelect.addEventListener('change', onRoomsGuests);
 
 
 
 // // Поле "Количество мест"
 const onGuestsRooms = (evt) => {
   const valueGuests = Number(evt.currentTarget.value);
+  const valueRooms = Number(formRoomSelect.value);
 
-  if (valueGuests === 0) {
-    formRoomsSelect.setCustomValidity(ROOM.hundred + ' комнат');
-  } else if (valueGuests === 1) {
-    formRoomsSelect.setCustomValidity(ROOM.one + ' комната');
-  } else if (valueGuests === 2) {
-    formRoomsSelect.setCustomValidity(ROOM.one + ' комната, ' + ROOM.two + ' комнаты');
-  } else if (valueGuests === 3) {
-    formRoomsSelect.setCustomValidity(ROOM.one + ' комната, ' + ROOM.two + ' комнаты, ' + ROOM.three +' комнаты');
+  if (valueGuests === 0 && valueRooms !== 100) {
+    formRoomSelect.setCustomValidity('100 комнат');
+  } else if (valueGuests > valueRooms) {
+    formRoomSelect.setCustomValidity('недопустимое значение');
   } else {
-    formRoomsSelect.setCustomValidity('');
+    formRoomSelect.setCustomValidity('');
   }
 
-  formRoomsSelect.reportValidity();
+  formRoomSelect.reportValidity();
 }
 
 //   слушатель
 formGuestSelect.addEventListener('change', onGuestsRooms);
 
 
-// // **********   ВАРИАНТ 2 (по полям "Количество комнат", "Количество мест") ********************
-// const onGuestsRooms = (evt) => {
-//   const roomsValue = Number(evt.currentTarget.value);
-//   const guestsValue = Number(evt.currentTarget.value);
 
-//   if (roomsValue === 1 && guestsValue !== 1) {
+// /// ************* ВАРИАНТ 2 (проверка поля "Количество мест")***********************
+// const onGuestsRooms = () => {
+//   const valueRooms = Number(formRoomSelect.value);
+//   const valueGuests = Number(formGuestSelect.value);
+
+//   if (valueRooms === 1 && valueGuests !== 1) {
 //     formGuestSelect.setCustomValidity('для 1 гостя');
-//   } else if (roomsValue === 2 && (guestsValue === 3 || guestsValue === 0)) {
+//   } else if (valueRooms === 2 && (valueGuests === 3 || valueGuests ===0)) {
 //     formGuestSelect.setCustomValidity('для 1-2 гостей');
-//   } else if (roomsValue === 3 && guestsValue === 0) {
+//   } else if (valueRooms === 3 && valueGuests === 0) {
 //     formGuestSelect.setCustomValidity('для 1-3 гостей');
-//   } else if (roomsValue === 100 && guestsValue !== 0) {
+//   } else if (valueRooms === 100 && valueGuests !== 0) {
 //     formGuestSelect.setCustomValidity('не для гостей');
 //   } else {
 //     formGuestSelect.setCustomValidity('');
@@ -191,10 +170,10 @@ formGuestSelect.addEventListener('change', onGuestsRooms);
 //   formGuestSelect.reportValidity();
 // };
 
-// //   слушатель
-// formRoomsSelect.addEventListener('change', onGuestsRooms);
-// formGuestSelect.addEventListener('change', onGuestsRooms);
-
+// const changeRoomsSelect = () => onGuestsRooms();
+// const changeGuestsSelect = () => onGuestsRooms();
+// formRoomSelect.addEventListener('change', changeRoomsSelect);
+// formGuestSelect.addEventListener('change', changeGuestsSelect);
 
 
 
@@ -202,7 +181,7 @@ formGuestSelect.addEventListener('change', onGuestsRooms);
 const setFormActive = () => {
   formAdForm.classList.add('ad-form--disabled');
   formAdFormElements.forEach((elem) => {
-    elem.disabled = false;
+    elem.setAttribute('disabled', true);
   });
 }
 
@@ -211,7 +190,7 @@ const setFormActive = () => {
 const setFormDeactive = () => {
   formAdForm.classList.remove('ad-form--disabled');
   formAdFormElements.forEach((elem) => {
-    elem.disabled = true;
+    elem.setAttribute('disabled', true);
   });
 }
 
