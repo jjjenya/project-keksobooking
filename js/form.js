@@ -108,72 +108,30 @@ formPrice.addEventListener('change', onFormPrice);
 
 
 
-// // Поле "Количество комнат"
-const onRoomsGuests = (evt) => {
-  const valueRooms = Number(evt.currentTarget.value);
+// // Поле "Количество комнат", Поле "Количество мест"
+const onGuestsRooms = () => {
+  const valueRooms = Number(formRoomSelect.value);
   const valueGuests = Number(formGuestSelect.value);
 
-  if (valueRooms === 100 && valueGuests !== 0) {
-    formGuestSelect.setCustomValidity('не для гостей');
-  } else if (valueRooms < valueGuests) {
-    formGuestSelect.setCustomValidity('количество гостей не должно превышать -' + valueRooms);
+  if (valueRooms === 1 && valueGuests !== 1) {
+    formGuestSelect.setCustomValidity('1 комната - для 1 гостя');
+  } else if (valueRooms === 2 && (valueGuests === 3 || valueGuests === 0)) {
+    formGuestSelect.setCustomValidity('2 комнаты - для 1-2 гостей');
+  } else if (valueRooms === 3 && valueGuests === 0) {
+    formGuestSelect.setCustomValidity('3 комнаты - для 1-3 гостей');
+  } else if (valueRooms === 100 && valueGuests !== 0) {
+    formGuestSelect.setCustomValidity('100 комнат - не для гостей');
   } else {
     formGuestSelect.setCustomValidity('');
   }
 
   formGuestSelect.reportValidity();
-}
+};
 
-//   слушатель
-formRoomSelect.addEventListener('change', onRoomsGuests);
-
-
-
-// // Поле "Количество мест"
-const onGuestsRooms = (evt) => {
-  const valueGuests = Number(evt.currentTarget.value);
-  const valueRooms = Number(formRoomSelect.value);
-
-  if (valueGuests === 0 && valueRooms !== 100) {
-    formRoomSelect.setCustomValidity('100 комнат');
-  } else if (valueGuests > valueRooms) {
-    formRoomSelect.setCustomValidity('недопустимое значение');
-  } else {
-    formRoomSelect.setCustomValidity('');
-  }
-
-  formRoomSelect.reportValidity();
-}
-
-//   слушатель
-formGuestSelect.addEventListener('change', onGuestsRooms);
-
-
-
-// /// ************* ВАРИАНТ 2 (проверка поля "Количество мест")***********************
-// const onGuestsRooms = () => {
-//   const valueRooms = Number(formRoomSelect.value);
-//   const valueGuests = Number(formGuestSelect.value);
-
-//   if (valueRooms === 1 && valueGuests !== 1) {
-//     formGuestSelect.setCustomValidity('для 1 гостя');
-//   } else if (valueRooms === 2 && (valueGuests === 3 || valueGuests ===0)) {
-//     formGuestSelect.setCustomValidity('для 1-2 гостей');
-//   } else if (valueRooms === 3 && valueGuests === 0) {
-//     formGuestSelect.setCustomValidity('для 1-3 гостей');
-//   } else if (valueRooms === 100 && valueGuests !== 0) {
-//     formGuestSelect.setCustomValidity('не для гостей');
-//   } else {
-//     formGuestSelect.setCustomValidity('');
-//   }
-
-//   formGuestSelect.reportValidity();
-// };
-
-// const changeRoomsSelect = () => onGuestsRooms();
-// const changeGuestsSelect = () => onGuestsRooms();
-// formRoomSelect.addEventListener('change', changeRoomsSelect);
-// formGuestSelect.addEventListener('change', changeGuestsSelect);
+const changeRoomsSelect = () => onGuestsRooms();
+const changeGuestsSelect = () => onGuestsRooms();
+formRoomSelect.addEventListener('change', changeRoomsSelect);
+formGuestSelect.addEventListener('change', changeGuestsSelect);
 
 
 
