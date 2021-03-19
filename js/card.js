@@ -9,7 +9,7 @@ const offerTypesMap = {
 
 
 // Контейнер для объявлений
-const mapCanvas = document.querySelector('#map-canvas');
+// const mapCanvas = document.querySelector('#map-canvas');
 
 
 // Получение шаблона объявления
@@ -150,4 +150,4 @@ const createCard = function (item) {
 }
 
 
-export { createCard, mapCanvas };
+export { createCard /*, mapCanvas*/ };
