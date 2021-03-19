@@ -11,10 +11,9 @@ const getRandomInteger = function (min = 0, max = 0) {
 }
 
 
-
 //   Генерация числа с плавающей точкой
 const getRandomLocation = function (min = 0, max = 0, NUMBER_AFTER_COMMA) {
-  let resultRandom = getRandomNumber(min, max);
+  let resultRandom = Math.random() * (max - min) + min;
   return resultRandom ? resultRandom.toFixed(NUMBER_AFTER_COMMA) : '0';
 }
 

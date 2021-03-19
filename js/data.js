@@ -75,7 +75,7 @@ const NUMBER_AFTER_COMMA = 5;
 //   Генерация координат объекта (функция)
 const getRandomСoordinates = function (x, y) {
   x = Number(getRandomLocation(Location.X.MIN, Location.X.MAX, NUMBER_AFTER_COMMA));
-  y = Number(getRandomLocation(Location.X.MIN, Location.Y.MAX, NUMBER_AFTER_COMMA));
+  y = Number(getRandomLocation(Location.Y.MIN, Location.Y.MAX, NUMBER_AFTER_COMMA));
 
   const locations = {
     X: x,

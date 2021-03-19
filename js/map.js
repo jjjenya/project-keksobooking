@@ -1,9 +1,17 @@
 
-import { similarArray } from './main.js';
-import { createCard } from './card.js';
 import { setFormActive, setFormDeactive } from './form.js';
 import { setFiltersActive, setFiltersDeactive } from './filtr.js';
 
+
+import { createArrayАdvertising } from './data.js';
+import { createCard } from './card.js';
+
+
+const NUMBER_АDVERTISING = 10;
+
+
+// Массив рандомных объектов
+const similarArray = createArrayАdvertising(NUMBER_АDVERTISING);
 
 
 const formAddressField = document.querySelector('#address');
@@ -73,7 +81,7 @@ const initMap = () => {
   map.setView({
     lat: DefaultCoordinates.LAT,
     lng: DefaultCoordinates.LNG,
-  }, 10);
+  }, 12);
 
 
   //   Создание слоя карты
@@ -108,27 +116,26 @@ mainPinMarker.on('moveend', (evt) => {
 
 
 
-similarArray.forEach(({ author, offer, location }) => {
-  const marker = L.marker({
-    lat: location.X,
-    lng: location.Y,
-  },
-  {
-    draggable: true,
-    icon: PIN_ICON,
+const createPins = () => {
+  similarArray.forEach(({ author, offer, location }) => {
+    const marker = L.marker({
+      lat: location.X,
+      lng: location.Y,
+    },
+    {
+      draggable: true,
+      icon: PIN_ICON,
+    });
+
+    marker
+      .addTo(map)
+      .bindPopup(
+        createCard({ author, offer }),
+        {
+          keepInView: true,
+        },
+      );
   });
+}
 
-
-
-  marker
-    .addTo(map)
-    .bindPopup(
-      createCard({ author, offer }),
-      {
-        keepInView: true,
-      },
-    );
-});
-
-
-export { deactivatePage, initMap };
+export { deactivatePage, initMap, createPins };
