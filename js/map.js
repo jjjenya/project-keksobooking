@@ -3,15 +3,7 @@ import { setFormActive, setFormDeactive } from './form.js';
 import { setFiltersActive, setFiltersDeactive } from './filtr.js';
 
 
-import { createArrayАdvertising } from './data.js';
 import { createCard } from './card.js';
-
-
-const NUMBER_АDVERTISING = 10;
-
-
-// Массив рандомных объектов
-const similarArray = createArrayАdvertising(NUMBER_АDVERTISING);
 
 
 const formAddressField = document.querySelector('#address');
@@ -81,7 +73,7 @@ const initMap = () => {
   map.setView({
     lat: DefaultCoordinates.LAT,
     lng: DefaultCoordinates.LNG,
-  }, 12);
+  }, 10);
 
 
   //   Создание слоя карты
@@ -116,11 +108,11 @@ mainPinMarker.on('moveend', (evt) => {
 
 
 
-const createPins = () => {
-  similarArray.forEach(({ author, offer, location }) => {
+const createPins = (data) => {
+  data.forEach((object) => {
     const marker = L.marker({
-      lat: location.X,
-      lng: location.Y,
+      lat: object.location.lat,
+      lng: object.location.lng,
     },
     {
       draggable: true,
@@ -130,12 +122,13 @@ const createPins = () => {
     marker
       .addTo(map)
       .bindPopup(
-        createCard({ author, offer }),
+        createCard(object),
         {
           keepInView: true,
         },
       );
   });
 }
+
 
 export { deactivatePage, initMap, createPins };
