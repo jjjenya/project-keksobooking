@@ -6,6 +6,8 @@ const offerTypesMap = {
   'bungalow': 'Бунгало',
 }
 
+const PHOTO_WIDTH = 45;
+const PHOTO_HEIGHT = 40;
 
 
 // Контейнер для объявлений
@@ -44,8 +46,8 @@ const createPhotosList = function (photos) {
     const imageItem = document.createElement('img');
     imageItem.classList.add('popup__photo');
     imageItem.setAttribute('src', photos[j]);
-    imageItem.setAttribute('width', '45');
-    imageItem.setAttribute('height', '40');
+    imageItem.setAttribute('width', PHOTO_WIDTH);
+    imageItem.setAttribute('height', PHOTO_HEIGHT);
     imageItem.setAttribute('alt', 'Фотография жилья');
     fragmentElement.appendChild(imageItem);
   }
@@ -150,4 +152,4 @@ const createCard = function (item) {
 }
 
 
-export { createCard /*, mapCanvas*/ };
+export { createCard };

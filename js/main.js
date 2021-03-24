@@ -6,16 +6,24 @@ import './map.js';
 import './filtr.js';
 import './message.js';
 import './api.js';
-import './user-form.js';
+import './public-reset.js';
 
 
-import { deactivatePage, createPins, initMap } from './map.js';
 import { getData } from './api.js';
+
+import {
+  deactivatePage,
+  createMarkers,
+  initMap
+} from './map.js';
+
+
+const SIMILAR_COUNT = 6;
 
 deactivatePage();
 initMap();
 getData((objects) => {
-  createPins(objects);
+  createMarkers(objects.slice(0, SIMILAR_COUNT));
 });
-// console.log (createPins());
-// getData();
+
+

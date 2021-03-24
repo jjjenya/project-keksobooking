@@ -1,19 +1,29 @@
 import { createErrorMessage } from './message.js';
 
+
 const URL_GET = 'https://22.javascript.pages.academy/keksobooking/data';
 const URL_SEND = 'https://22.javascript.pages.academy/keksobooking';
 
-const getData = (onSucces) => {
+
+const getData = (onSuccsess) => {
   fetch(URL_GET)
-    .then((response) => response.json())
-    .then((objects) => {
-      onSucces(objects);
+    .then((response) => {
+      if (response.ok) {
+        response.json()
+          .then((data) => {
+            onSuccsess(data);
+          })
+      } else {
+        throw new Error(`${response.status} - ${response.statusText}`);
+      }
     })
-    .catch(() => {createErrorMessage('connection error')});
-};
+    .catch((error) => {
+      createErrorMessage(error + '. Не удалось загрузить данные')
+    })
+}
 
 
-const sendData = (onSuccess, onFail, body) => {
+const sendData = (body, onSuccess, onError) => {
   fetch(URL_SEND,
     {
       method: 'POST',
@@ -22,14 +32,16 @@ const sendData = (onSuccess, onFail, body) => {
   )
     .then((response) => {
       if (response.ok) {
-        onSuccess();
+        onSuccess;
       } else {
-        onFail('Не удалось отправить форму. Попробуйте ещё раз');
+        throw new Error;
       }
     })
     .catch(() => {
-      onFail('Не удалось отправить форму. Попробуйте ещё раз');
+      onError;
     });
 };
 
+
 export { getData, sendData };
+

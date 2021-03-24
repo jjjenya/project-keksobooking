@@ -39,14 +39,16 @@ const PIN_ICON = L.icon({
   iconAnchor: [26, 52],
 });
 
-
-
+// Заполнения поля "Адрес (координаты)" по умолчанию координатами центра Токио
+const setFormAddressFieldDefault = () => {
+  setFormAddressField(DefaultCoordinates.LAT, DefaultCoordinates.LNG);
+}
 
 //   Активное состояние Страницы
 const activatePage = () => {
   setFormActive();
   setFiltersActive();
-  setFormAddressField(DefaultCoordinates.LAT, DefaultCoordinates.LNG);   // Заполнения поля "Адрес (координаты)" по умолчанию координатами центра Токио
+  setFormAddressFieldDefault();
 }
 
 
@@ -108,16 +110,20 @@ mainPinMarker.on('moveend', (evt) => {
 
 
 
-const createPins = (data) => {
+// Создание меток
+const markers = [];
+const createMarkers = (data) => {
+
   data.forEach((object) => {
-    const marker = L.marker({
-      lat: object.location.lat,
-      lng: object.location.lng,
-    },
-    {
-      draggable: true,
-      icon: PIN_ICON,
-    });
+    const marker = L.marker(
+      {
+        lat: object.location.lat,
+        lng: object.location.lng,
+      },
+      {
+        draggable: true,
+        icon: PIN_ICON,
+      });
 
     marker
       .addTo(map)
@@ -127,8 +133,28 @@ const createPins = (data) => {
           keepInView: true,
         },
       );
+
+    markers.push(marker);
+
   });
 }
 
 
-export { deactivatePage, initMap, createPins };
+
+// Расположение маркера красного по умолчанию после отправки/сброса формы
+const setDefaultMainMarker = () => {
+  mainPinMarker.setLatLng([DefaultCoordinates.LAT, DefaultCoordinates.LNG]);
+}
+
+
+// Удаление меток
+const deleteMarkers = (markers) => {
+  for (let i = 0; i < markers.length; i++) {
+    markers[i]
+      .remove();
+  }
+}
+
+
+export { deactivatePage, initMap, createMarkers, activatePage, setFormAddressFieldDefault, setDefaultMainMarker, deleteMarkers, markers };
+
