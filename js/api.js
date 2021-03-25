@@ -1,29 +1,54 @@
-import { createErrorMessage } from './message.js';
+import {
+  createErrorMessage,
+  showErrorMessage
+} from './message.js';
 
 
 const URL_GET = 'https://22.javascript.pages.academy/keksobooking/data';
 const URL_SEND = 'https://22.javascript.pages.academy/keksobooking';
 
 
+
+//   Запрос данных с сервера
 const getData = (onSuccsess) => {
   fetch(URL_GET)
     .then((response) => {
       if (response.ok) {
-        response.json()
-          .then((data) => {
-            onSuccsess(data);
-          })
+        return response.json();
       } else {
         throw new Error(`${response.status} - ${response.statusText}`);
       }
     })
+    .then((objects) => onSuccsess(objects))
     .catch((error) => {
       createErrorMessage(error + '. Не удалось загрузить данные')
     })
 }
 
+// ************** ВАРИАНТ № 2 ****************************
+// // предварительная проверка
+// const status = (response) => {
+//   if (response.ok) {
+//     return Promise.resolve(response)
+//   } else {
+//     return Promise.reject(new Error(`${response.status} - ${response.statusText}`))
+//   }
+// }
 
-const sendData = (body, onSuccess, onError) => {
+// const getData = (onSuccsess) => {
+//   fetch(URL_GET)
+//     .then(status)
+//     .then((response) => response.json())
+//     .then((objects) => onSuccsess(objects))
+//     .catch((error) => {
+//       createErrorMessage(error + '. Не удалось загрузить данные')
+//     })
+// }
+
+
+
+//   Отправка данных на сервер
+const sendData = (body, onSuccess) => {
   fetch(URL_SEND,
     {
       method: 'POST',
@@ -34,11 +59,12 @@ const sendData = (body, onSuccess, onError) => {
       if (response.ok) {
         onSuccess;
       } else {
-        throw new Error;
+        throw new Error(`${response.status} - ${response.statusText}`);
       }
     })
+
     .catch(() => {
-      onError;
+      showErrorMessage()
     });
 };
 

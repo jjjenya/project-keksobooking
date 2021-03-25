@@ -1,3 +1,4 @@
+import { isEscEvent } from  './util.js';
 
 const mainElement = document.querySelector('main')
 const successMessageTemplate = document.querySelector('#success').content;
@@ -9,55 +10,69 @@ const errorMessageElement = errorMessageTemplate.querySelector('.error');
 const SHOW_TIME = 10000;
 
 
-// const isEscEvent = (evt) => {
-//   return evt.key === ('Escape' || 'Esc');
-// };
-
-
-
+//   Показ ошибки, если не удалось получить данные с сервера:
 const createErrorMessage = (message) => {
-  const alertContainer = document.createElement('div');
-
-  alertContainer.style.zIndex = 100;
-  alertContainer.style.position = 'absolute';
-  alertContainer.style.left = 0;
-  alertContainer.style.top = 0;
-  alertContainer.style.right = 0;
-  alertContainer.style.padding = '28px 3px';
-  alertContainer.style.fontSize = '30px';
-  alertContainer.style.textAlign = 'center';
-  alertContainer.style.backgroundColor = 'red';
-
-  alertContainer.textContent = message;
-  alertContainer.classList.add('error__getdata');
-
-  document.body.appendChild(alertContainer);
+  const errorMessageElement = document.querySelector('#server-error').content.querySelector('.server-error').cloneNode(true);
+  const errorReasonElement = document.createElement('p');
+  errorReasonElement.classList.add('server-error__message')
+  errorReasonElement.textContent = message;
+  errorMessageElement.appendChild(errorReasonElement);
+  document.body.appendChild(errorMessageElement);
 
   setTimeout(() => {
-    alertContainer.remove();
-  }, SHOW_TIME)
-};
-
-
-
-// Показ сообщения после успешной отправки формы
-const showSuccessMessage = () => {
-  mainElement.appendChild(successMessageElement);
-  // будет закрытие;
-
+    errorMessageElement.remove();
+  }, SHOW_TIME);
 }
 
 
-// Показ сообщения после неудачной отправки формы
+
+/************ отправка формы ***********/
+
+// Закрытие сообщения об успешной отправке
+const onSuccessMessageClick = () => {
+  successMessageElement.remove();
+  document.removeEventListener('keydown', onSuccessMessageKeydown);
+  document.removeEventListener('click', onSuccessMessageClick);
+}
+
+// Закрытие сообщения об успешной отправке при нажатии Esc
+const onSuccessMessageKeydown = (evt) => {
+  if (isEscEvent(evt)) {
+    evt.preventDefault();
+    onSuccessMessageClick();
+  }
+}
+
+// Закрытие сообщения об ошибке отправки формы
+const onErrorMessageClick = () => {
+  errorMessageElement.remove();
+  document.removeEventListener('keydown', onErrorMessageKeydown);
+  document.removeEventListener('click', onErrorMessageClick);
+}
+
+// Закрытие сообщения об ошибке отправки при нажатии Esc
+const onErrorMessageKeydown = (evt) => {
+  if (isEscEvent(evt)) {
+    evt.preventDefault();
+    onErrorMessageClick();
+  }
+}
+
+// Показ сообщения после успешной отправки
+const showSuccessMessage = () => {
+  mainElement.appendChild(successMessageElement);
+  document.addEventListener('keydown', onSuccessMessageKeydown);
+  document.addEventListener('click', onSuccessMessageClick);
+}
+
+// Показ сообщения об ошибке отправки
 const showErrorMessage = () => {
   mainElement.appendChild(errorMessageElement);
-  // будет закрытие;
-
+  document.addEventListener('keydown', onErrorMessageKeydown);
+  document.addEventListener('click', onErrorMessageClick);
 }
 
 
 
 
 export { createErrorMessage, showSuccessMessage, showErrorMessage };
-
-

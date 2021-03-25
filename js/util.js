@@ -44,12 +44,6 @@ const isEscEvent = (evt) => {
 };
 
 
-// const isEnterEvent = (evt) => {
-//   return evt.key === 'Enter';
-// };
-
-
-
 export {
   getRandomNumber,
   getRandomInteger,

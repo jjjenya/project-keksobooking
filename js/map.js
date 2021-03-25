@@ -2,13 +2,14 @@
 import { setFormActive, setFormDeactive } from './form.js';
 import { setFiltersActive, setFiltersDeactive } from './filtr.js';
 
-
+import { getData } from './api.js';
 import { createCard } from './card.js';
 
 
 const formAddressField = document.querySelector('#address');
 
 const NUMBER_AFTER_COMMA = 5;
+const SIMILAR_COUNT = 6;
 
 
 //   Координаты по умолчанию - Токио
@@ -155,6 +156,12 @@ const deleteMarkers = (markers) => {
   }
 }
 
+// Прорисовка меток на основе данных из сервера
+const getDataMap = () => {
+  getData((objects) => {
+    createMarkers(objects.slice(0, SIMILAR_COUNT));
+  });
+}
 
-export { deactivatePage, initMap, createMarkers, activatePage, setFormAddressFieldDefault, setDefaultMainMarker, deleteMarkers, markers };
+export { deactivatePage, initMap, createMarkers, activatePage, setFormAddressFieldDefault, setDefaultMainMarker, deleteMarkers, markers, getDataMap };
 

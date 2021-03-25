@@ -8,22 +8,9 @@ import './message.js';
 import './api.js';
 import './public-reset.js';
 
-
-import { getData } from './api.js';
-
-import {
-  deactivatePage,
-  createMarkers,
-  initMap
-} from './map.js';
-
-
-const SIMILAR_COUNT = 6;
+import { deactivatePage, initMap, getDataMap } from './map.js';
 
 deactivatePage();
 initMap();
-getData((objects) => {
-  createMarkers(objects.slice(0, SIMILAR_COUNT));
-});
-
+getDataMap();
 

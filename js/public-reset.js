@@ -1,9 +1,8 @@
-import { showSuccessMessage, showErrorMessage } from './message.js';
+import { showSuccessMessage } from './message.js';
 import { formMapFilters } from './filtr.js';
 import { formAdForm, formButtonReset } from './form.js';
 import { sendData } from './api.js';
-
-
+import { getDataMap } from './map.js';
 
 import {
   deleteMarkers,
@@ -13,22 +12,30 @@ import {
 } from './map.js';
 
 
-
-//    Очистка страницы при нажатии кнопки "Очистить"
-formButtonReset.addEventListener('click', (evt) => {
-  evt.preventDefault();
+//   Очистка страницы
+const clearPage = () => {
   formAdForm.reset();
   formMapFilters.reset();
   setDefaultMainMarker();
   setFormAddressFieldDefault();
-  deleteMarkers(markers);
+  deleteMarkers(markers)
+}
+
+
+//    Очистка страницы при нажатии кнопки "Очистить"
+formButtonReset.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  clearPage();
+  getDataMap();
 });
 
 
-//   При успешной отправке формы
+//   Действия при успешной отправке формы
 const sendSuccessForm = () => {
+
   showSuccessMessage();
-  // onClearPage();
+  clearPage();
+  getDataMap();
 }
 
 
@@ -40,10 +47,9 @@ const onFormSubmit = (evt) => {
   sendData(
     new FormData(evt.target),
     sendSuccessForm(),
-    showErrorMessage(),
   );
 }
 
-
 // слушатель
-formAdForm.addEventListener('submit', (evt) => onFormSubmit(evt))
+formAdForm.addEventListener('submit', onFormSubmit)
+

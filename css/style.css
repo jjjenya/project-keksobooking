@@ -1007,8 +1007,8 @@ fieldset {
 
 
 
-/* .server-error {
-  z-index: 100;
+.server-error {
+  /* z-index: 100; */
   padding: 10px 3px;
   position: fixed;
   top: 0;
@@ -1024,7 +1024,7 @@ fieldset {
   font-size: 30px;
   text-align: center;
   color: #ffffff;
-} */
+}
 
 
 
