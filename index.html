@@ -22,7 +22,7 @@
     <section class="map">
 
       <!-- Блок для вставки карты -->
-      <div class="map__canvas" id="map-canvas" style="width: 1200px; height: 480px; margin-left: auto; margin-right: auto; ">
+      <div class="map__canvas" id="map-canvas" disabled="true" style="width: 1200px; height: 480px; margin-left: auto; margin-right: auto; ">
 
       </div>
 
@@ -254,6 +254,13 @@
       <button type="button" class="error__button">Попробовать снова</button>
     </div>
   </template>
+
+    <!-- Сообщение об ошибке получения данных с сервера -->
+    <template id="server-error">
+      <div class="server-error">
+        <p class="server-error__message"></p>
+      </div>
+    </template>
 
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <script src="./js/main.js" type="module"></script>

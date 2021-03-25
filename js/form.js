@@ -1,4 +1,3 @@
-
 // Форма объявления
 
 const formPrice = document.querySelector('#price');
@@ -12,6 +11,9 @@ const formRoomSelect = document.querySelector('#room_number');
 
 const formAdForm = document.querySelector('.ad-form');
 const formAdFormElements = formAdForm.querySelectorAll('fieldset');
+
+const formButtonReset = document.querySelector('.ad-form__reset');
+
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -137,6 +139,15 @@ formGuestSelect.addEventListener('change', changeGuestsSelect);
 
 //   Активное состояние Формы
 const setFormActive = () => {
+  formAdForm.classList.remove('ad-form--disabled');
+  formAdFormElements.forEach((elem) => {
+    elem.removeAttribute('disabled');
+  });
+}
+
+
+//   Неактивное состояние Формы
+const setFormDeactive = () => {
   formAdForm.classList.add('ad-form--disabled');
   formAdFormElements.forEach((elem) => {
     elem.setAttribute('disabled', true);
@@ -144,14 +155,5 @@ const setFormActive = () => {
 }
 
 
-//   Неактивное состояние Формы
-const setFormDeactive = () => {
-  formAdForm.classList.remove('ad-form--disabled');
-  formAdFormElements.forEach((elem) => {
-    elem.setAttribute('disabled', true);
-  });
-}
 
-
-
-export { setFormActive, setFormDeactive };
+export { setFormActive, setFormDeactive, formButtonReset, formAdForm };

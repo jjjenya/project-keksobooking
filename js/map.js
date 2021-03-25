@@ -2,21 +2,14 @@
 import { setFormActive, setFormDeactive } from './form.js';
 import { setFiltersActive, setFiltersDeactive } from './filtr.js';
 
-
-import { createArrayАdvertising } from './data.js';
+import { getData } from './api.js';
 import { createCard } from './card.js';
-
-
-const NUMBER_АDVERTISING = 10;
-
-
-// Массив рандомных объектов
-const similarArray = createArrayАdvertising(NUMBER_АDVERTISING);
 
 
 const formAddressField = document.querySelector('#address');
 
 const NUMBER_AFTER_COMMA = 5;
+const SIMILAR_COUNT = 6;
 
 
 //   Координаты по умолчанию - Токио
@@ -47,14 +40,16 @@ const PIN_ICON = L.icon({
   iconAnchor: [26, 52],
 });
 
-
-
+// Заполнения поля "Адрес (координаты)" по умолчанию координатами центра Токио
+const setFormAddressFieldDefault = () => {
+  setFormAddressField(DefaultCoordinates.LAT, DefaultCoordinates.LNG);
+}
 
 //   Активное состояние Страницы
 const activatePage = () => {
   setFormActive();
   setFiltersActive();
-  setFormAddressField(DefaultCoordinates.LAT, DefaultCoordinates.LNG);   // Заполнения поля "Адрес (координаты)" по умолчанию координатами центра Токио
+  setFormAddressFieldDefault();
 }
 
 
@@ -81,7 +76,7 @@ const initMap = () => {
   map.setView({
     lat: DefaultCoordinates.LAT,
     lng: DefaultCoordinates.LNG,
-  }, 12);
+  }, 10);
 
 
   //   Создание слоя карты
@@ -116,26 +111,57 @@ mainPinMarker.on('moveend', (evt) => {
 
 
 
-const createPins = () => {
-  similarArray.forEach(({ author, offer, location }) => {
-    const marker = L.marker({
-      lat: location.X,
-      lng: location.Y,
-    },
-    {
-      draggable: true,
-      icon: PIN_ICON,
-    });
+// Создание меток
+const markers = [];
+const createMarkers = (data) => {
+
+  data.forEach((object) => {
+    const marker = L.marker(
+      {
+        lat: object.location.lat,
+        lng: object.location.lng,
+      },
+      {
+        draggable: true,
+        icon: PIN_ICON,
+      });
 
     marker
       .addTo(map)
       .bindPopup(
-        createCard({ author, offer }),
+        createCard(object),
         {
           keepInView: true,
         },
       );
+
+    markers.push(marker);
+
   });
 }
 
-export { deactivatePage, initMap, createPins };
+
+
+// Расположение маркера красного по умолчанию после отправки/сброса формы
+const setDefaultMainMarker = () => {
+  mainPinMarker.setLatLng([DefaultCoordinates.LAT, DefaultCoordinates.LNG]);
+}
+
+
+// Удаление меток
+const deleteMarkers = (markers) => {
+  for (let i = 0; i < markers.length; i++) {
+    markers[i]
+      .remove();
+  }
+}
+
+// Прорисовка меток на основе данных из сервера
+const getDataMap = () => {
+  getData((objects) => {
+    createMarkers(objects.slice(0, SIMILAR_COUNT));
+  });
+}
+
+export { deactivatePage, initMap, createMarkers, activatePage, setFormAddressFieldDefault, setDefaultMainMarker, deleteMarkers, markers, getDataMap };
+

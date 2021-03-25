@@ -926,7 +926,7 @@ fieldset {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 1000;
 
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -1004,6 +1004,29 @@ fieldset {
   outline: none;
   opacity: 0.6;
 }
+
+
+
+.server-error {
+  /* z-index: 100; */
+  padding: 10px 3px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: red;
+
+}
+
+.server-error__message {
+  margin: 0;
+  font-size: 30px;
+  text-align: center;
+  color: #ffffff;
+}
+
+
 
 .visually-hidden {
   position: absolute;
