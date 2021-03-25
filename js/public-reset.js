@@ -46,7 +46,7 @@ const onFormSubmit = (evt) => {
 
   sendData(
     new FormData(evt.target),
-    sendSuccessForm(),
+    sendSuccessForm,
   );
 }
 

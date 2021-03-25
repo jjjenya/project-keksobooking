@@ -57,7 +57,7 @@ const sendData = (body, onSuccess) => {
   )
     .then((response) => {
       if (response.ok) {
-        onSuccess;
+        onSuccess();
       } else {
         throw new Error(`${response.status} - ${response.statusText}`);
       }
