@@ -44,11 +44,21 @@ const isEscEvent = (evt) => {
 };
 
 
+function debounce (fn, wait) {
+  let t;
+  return function () {
+    clearTimeout(t);
+    t = setTimeout(() => fn.apply(this, arguments), wait);
+  }
+}
+
+
 export {
   getRandomNumber,
   getRandomInteger,
   getRandomLocation,
   getRandomArrayElement,
   getArrayRandomLength,
-  isEscEvent
+  isEscEvent,
+  debounce
 };

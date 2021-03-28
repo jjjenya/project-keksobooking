@@ -1,3 +1,4 @@
+// /* global _:readonly */
 import './util.js';
 import './data.js';
 import './card.js';
@@ -7,6 +8,8 @@ import './filtr.js';
 import './message.js';
 import './api.js';
 import './public-reset.js';
+import './photo.js';
+
 
 import { deactivatePage, initMap, getDataMap } from './map.js';
 

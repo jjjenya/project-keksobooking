@@ -1,11 +1,12 @@
-import { showSuccessMessage } from './message.js';
+import { sendData } from './api.js';
 import { formMapFilters } from './filtr.js';
 import { formAdForm, formButtonReset } from './form.js';
-import { sendData } from './api.js';
-import { getDataMap } from './map.js';
+import { showSuccessMessage } from './message.js';
+import { setDefaultImages } from './photo.js';
 
 import {
   deleteMarkers,
+  getDataMap,
   markers,
   setDefaultMainMarker,
   setFormAddressFieldDefault
@@ -18,16 +19,19 @@ const clearPage = () => {
   formMapFilters.reset();
   setDefaultMainMarker();
   setFormAddressFieldDefault();
-  deleteMarkers(markers)
+  deleteMarkers(markers);
+  setDefaultImages();
 }
 
 
 //    Очистка страницы при нажатии кнопки "Очистить"
-formButtonReset.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  clearPage();
-  getDataMap();
-});
+const defaultButtonReset = () => {
+  formButtonReset.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    clearPage();
+    getDataMap();
+  });
+}
 
 
 //   Действия при успешной отправке формы
@@ -52,4 +56,7 @@ const onFormSubmit = (evt) => {
 
 // слушатель
 formAdForm.addEventListener('submit', onFormSubmit)
+
+
+export { clearPage, defaultButtonReset }
 
