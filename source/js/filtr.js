@@ -82,21 +82,21 @@ const isCheckFeatures = (feature, advertisement) => {
 const getFilteredAds = (advertisements) => {
   const resultAdvertisements = [];
   for (let i = 0; i < advertisements.length; i++) {
-    if (isCheckType(advertisements[i], housingTypeSelect) &&
-      isCheckPrice(advertisements[i], housingPriceSelect) &&
-      isCheckRooms(advertisements[i], housingRoomsSelect) &&
-      isCheckGuests(advertisements[i], housingGuestsSelect) &&
-      isCheckFeatures(wifiFilter, advertisements[i]) &&
-      isCheckFeatures(dishwasherFilter, advertisements[i]) &&
-      isCheckFeatures(parkingFilter, advertisements[i]) &&
-      isCheckFeatures(washerFilter, advertisements[i]) &&
-      isCheckFeatures(elevatorFilter, advertisements[i]) &&
-      isCheckFeatures(conditionerFilter, advertisements[i])) {
-      resultAdvertisements.push(advertisements[i]);
+    if (resultAdvertisements.length < SIMILAR_STAYS_COUNT) {
+      if (isCheckType(advertisements[i], housingTypeSelect) &&
+        isCheckPrice(advertisements[i], housingPriceSelect) &&
+        isCheckRooms(advertisements[i], housingRoomsSelect) &&
+        isCheckGuests(advertisements[i], housingGuestsSelect) &&
+        isCheckFeatures(wifiFilter, advertisements[i]) &&
+        isCheckFeatures(dishwasherFilter, advertisements[i]) &&
+        isCheckFeatures(parkingFilter, advertisements[i]) &&
+        isCheckFeatures(washerFilter, advertisements[i]) &&
+        isCheckFeatures(elevatorFilter, advertisements[i]) &&
+        isCheckFeatures(conditionerFilter, advertisements[i])) {
+        resultAdvertisements.push(advertisements[i]);
+      }
     }
-    if (resultAdvertisements.length >= SIMILAR_STAYS_COUNT) {
-      break;
-    }
+    break;
   }
   return resultAdvertisements;
 }
