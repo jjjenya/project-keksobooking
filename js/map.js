@@ -1,15 +1,22 @@
 
-import { setFormActive, setFormDeactive } from './form.js';
-import { setFiltersActive, setFiltersDeactive } from './filtr.js';
-
 import { getData } from './api.js';
 import { createCard } from './card.js';
 
+import { defaultButtonReset } from './public-reset.js';
+
+import { setFormActive, setFormDeactive } from './form.js';
+import { setFiltersActive, setFiltersDeactive, setFilterChange } from './filtr.js';
 
 const formAddressField = document.querySelector('#address');
 
 const NUMBER_AFTER_COMMA = 5;
-const SIMILAR_COUNT = 6;
+
+const ADDS_COUNT = 10;
+const MIN_ADDS = 0;
+
+let advertisementsToRender = [];
+
+const map = L.map('map-canvas');
 
 
 //   Координаты по умолчанию - Токио
@@ -40,7 +47,7 @@ const PIN_ICON = L.icon({
   iconAnchor: [26, 52],
 });
 
-// Заполнения поля "Адрес (координаты)" по умолчанию координатами центра Токио
+//   Заполнения поля "Адрес (координаты)" по умолчанию координатами центра Токио
 const setFormAddressFieldDefault = () => {
   setFormAddressField(DefaultCoordinates.LAT, DefaultCoordinates.LNG);
 }
@@ -61,12 +68,8 @@ const deactivatePage = () => {
 
 
 
-
-
 // // Карта
 /* global L:readonly */
-
-const map = L.map('map-canvas');
 
 const initMap = () => {
   map.on('load', () => {
@@ -87,7 +90,6 @@ const initMap = () => {
     },
   ).addTo(map);
 }
-
 
 
 //   Расположение маркера красного
@@ -149,19 +151,34 @@ const setDefaultMainMarker = () => {
 
 
 // Удаление меток
-const deleteMarkers = (markers) => {
+const deleteMarkers = () => {
   for (let i = 0; i < markers.length; i++) {
     markers[i]
       .remove();
   }
 }
 
-// Прорисовка меток на основе данных из сервера
+
+
 const getDataMap = () => {
-  getData((objects) => {
-    createMarkers(objects.slice(0, SIMILAR_COUNT));
+  getData((advertisements) => {
+    advertisementsToRender = advertisements.slice(MIN_ADDS, ADDS_COUNT);
+    initMap(advertisementsToRender);
+    createMarkers(advertisements);
+    setFilterChange(advertisementsToRender);
+    defaultButtonReset();
   });
 }
 
-export { deactivatePage, initMap, createMarkers, activatePage, setFormAddressFieldDefault, setDefaultMainMarker, deleteMarkers, markers, getDataMap };
 
+export {
+  activatePage,
+  deactivatePage,
+  deleteMarkers,
+  createMarkers,
+  initMap,
+  getDataMap,
+  setFormAddressFieldDefault,
+  setDefaultMainMarker,
+  markers
+};
