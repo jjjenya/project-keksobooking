@@ -16,4 +16,3 @@ import { deactivatePage, initMap, getDataMap } from './map.js';
 deactivatePage();
 initMap();
 getDataMap();
-

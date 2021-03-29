@@ -10,10 +10,6 @@ const PHOTO_WIDTH = 45;
 const PHOTO_HEIGHT = 40;
 
 
-// Контейнер для объявлений
-// const mapCanvas = document.querySelector('#map-canvas');
-
-
 // Получение шаблона объявления
 const cardTemplate = document.querySelector('#card').content;
 const cardElement = cardTemplate.querySelector('article');

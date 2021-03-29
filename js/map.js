@@ -158,12 +158,6 @@ const deleteMarkers = () => {
   }
 }
 
-//  Удаление меток - второй вариант
-// const deleteMarkers = () => {
-//   markers.forEach((marker) => {
-//     marker.remove();
-//   })
-// }
 
 
 const getDataMap = () => {

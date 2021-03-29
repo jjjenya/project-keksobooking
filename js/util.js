@@ -44,7 +44,7 @@ const isEscEvent = (evt) => {
 };
 
 
-function debounce (fn, wait) {
+const debounce = (fn, wait) => {
   let t;
   return function () {
     clearTimeout(t);

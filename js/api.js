@@ -25,27 +25,6 @@ const getData = (onSuccsess) => {
     })
 }
 
-// ************** ВАРИАНТ № 2 ****************************
-// // предварительная проверка
-// const status = (response) => {
-//   if (response.ok) {
-//     return Promise.resolve(response)
-//   } else {
-//     return Promise.reject(new Error(`${response.status} - ${response.statusText}`))
-//   }
-// }
-
-// const getData = (onSuccsess) => {
-//   fetch(URL_GET)
-//     .then(status)
-//     .then((response) => response.json())
-//     .then((objects) => onSuccsess(objects))
-//     .catch((error) => {
-//       createErrorMessage(error + '. Не удалось загрузить данные')
-//     })
-// }
-
-
 
 //   Отправка данных на сервер
 const sendData = (body, onSuccess) => {
@@ -70,4 +49,3 @@ const sendData = (body, onSuccess) => {
 
 
 export { getData, sendData };
-
