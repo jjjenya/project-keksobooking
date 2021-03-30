@@ -23,7 +23,7 @@ let advertisementsToRender = [];
 
 //   Координаты по умолчанию - Токио
 const DefaultCoordinates = {
-  LAT: 35.68950,
+  LAT: 35.68949,
   LNG: 139.69171,
 }
 
