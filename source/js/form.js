@@ -1,5 +1,41 @@
 // Форма объявления
 
+const MIN_TITLE_LENGTH = 30;
+const MAX_TITLE_LENGTH = 100;
+
+const MAX_PRICE = 1000000;
+
+
+//   Перечисление типов жилья
+const PlaceTypes = {
+  BUNGALOW: 'bungalow',
+  FLAT: 'flat',
+  HOUSE: 'house',
+  PALACE: 'palace',
+}
+
+
+//   Типы жилья с placeholer и min значением
+const PlaceTypePrice = {
+  [PlaceTypes.BUNGALOW]: {
+    PLACEHOLDER: '0',
+    PRICE_MIN: 0,
+  },
+  [PlaceTypes.FLAT]: {
+    PLACEHOLDER: '1000',
+    PRICE_MIN: 1000,
+  },
+  [PlaceTypes.HOUSE]: {
+    PLACEHOLDER: '5000',
+    PRICE_MIN: 5000,
+  },
+  [PlaceTypes.PALACE]: {
+    PLACEHOLDER: '10000',
+    PRICE_MIN: 10000,
+  },
+}
+
+
 const formPrice = document.querySelector('#price');
 const formTypeSelect = document.querySelector('#type');
 const formTimeIn = document.querySelector('#timein');
@@ -15,48 +51,11 @@ const formAdFormElements = formAdForm.querySelectorAll('fieldset');
 const formButtonReset = document.querySelector('.ad-form__reset');
 
 
-const MIN_TITLE_LENGTH = 30;
-const MAX_TITLE_LENGTH = 100;
-
-const MAX_PRICE = 1000000;
-
-
-
-
-//   Перечисление типов жилья
-const placeTypes = {
-  BUNGALOW: 'bungalow',
-  FLAT: 'flat',
-  HOUSE: 'house',
-  PALACE: 'palace',
-}
-
-
-//   Типы жилья с placeholer и min значением
-const placeTypePrice = {
-  [placeTypes.BUNGALOW]: {
-    PLACEHOLDER: '0',
-    PRICE_MIN: 0,
-  },
-  [placeTypes.FLAT]: {
-    PLACEHOLDER: '1000',
-    PRICE_MIN: 1000,
-  },
-  [placeTypes.HOUSE]: {
-    PLACEHOLDER: '5000',
-    PRICE_MIN: 5000,
-  },
-  [placeTypes.PALACE]: {
-    PLACEHOLDER: '10000',
-    PRICE_MIN: 10000,
-  },
-}
-
 
 //   Изменение значения placeholder поля "Цена за ночь, руб." при изменении поля "Тип жилья"
 formTypeSelect.addEventListener('change', () => {
-  formPrice.placeholder = placeTypePrice[formTypeSelect.value].PLACEHOLDER;
-  formPrice.min = placeTypePrice[formTypeSelect.value].PRICE_MIN;
+  formPrice.placeholder = PlaceTypePrice[formTypeSelect.value].PLACEHOLDER;
+  formPrice.min = PlaceTypePrice[formTypeSelect.value].PRICE_MIN;
 })
 
 //   Изменение взаимозависимых полей "Время заезда и выезда"
@@ -70,7 +69,7 @@ formTimeOut.addEventListener('change', function () {
 
 // // Поле "Заголовок объявления"
 //   обработчик
-const onFormTitle = (evt) => {
+const onTitleInput  = (evt) => {
   const valueLength = evt.currentTarget.value.length;
 
   if (valueLength < MIN_TITLE_LENGTH) {
@@ -85,17 +84,17 @@ const onFormTitle = (evt) => {
 };
 
 //   слушатель
-formTitle.addEventListener('input', onFormTitle);
+formTitle.addEventListener('input', onTitleInput);
 
 
 
 // // Поле "Цена за ночь, руб."
 //   обработчик
-const onFormPrice = (evt) => {
+const onPriceInput = (evt) => {
   const valuePrice = evt.currentTarget.value;
 
-  if (valuePrice < (placeTypePrice[formTypeSelect.value].PRICE_MIN)) {
-    formPrice.setCustomValidity('Минимальная цена ночь - ' + placeTypePrice[formTypeSelect.value].PRICE_MIN + ': увеличьте вводимую цену');
+  if (valuePrice < (PlaceTypePrice[formTypeSelect.value].PRICE_MIN)) {
+    formPrice.setCustomValidity('Минимальная цена ночь - ' + PlaceTypePrice[formTypeSelect.value].PRICE_MIN + ': увеличьте вводимую цену');
   } else if (valuePrice > MAX_PRICE) {
     formPrice.setCustomValidity('Максимальная цена ночь - ' + MAX_PRICE + ': уменьшите вводимую цену');
   } else {
@@ -106,12 +105,12 @@ const onFormPrice = (evt) => {
 }
 
 //   слушатель
-formPrice.addEventListener('change', onFormPrice);
+formPrice.addEventListener('change', onPriceInput);
 
 
 
 // // Поле "Количество комнат", Поле "Количество мест"
-const onGuestsRooms = () => {
+const onCapacityInput = () => {
   const valueRooms = Number(formRoomSelect.value);
   const valueGuests = Number(formGuestSelect.value);
 
@@ -130,8 +129,8 @@ const onGuestsRooms = () => {
   formGuestSelect.reportValidity();
 };
 
-const changeRoomsSelect = () => onGuestsRooms();
-const changeGuestsSelect = () => onGuestsRooms();
+const changeRoomsSelect = () => onCapacityInput();
+const changeGuestsSelect = () => onCapacityInput();
 formRoomSelect.addEventListener('change', changeRoomsSelect);
 formGuestSelect.addEventListener('change', changeGuestsSelect);
 

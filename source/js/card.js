@@ -1,3 +1,7 @@
+const PHOTO_WIDTH = 45;
+const PHOTO_HEIGHT = 40;
+
+
 //   Сопоставление типов жилья с подписями
 const offerTypesMap = {
   'palace': 'Дворец',
@@ -5,9 +9,6 @@ const offerTypesMap = {
   'house': 'Дом',
   'bungalow': 'Бунгало',
 }
-
-const PHOTO_WIDTH = 45;
-const PHOTO_HEIGHT = 40;
 
 
 // Получение шаблона объявления

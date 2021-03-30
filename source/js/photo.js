@@ -1,3 +1,7 @@
+const IMAGE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+const IMAGE_DEFAULT_SOURCE = 'img/muffin-grey.svg';
+
+
 const avatarChooser = document.querySelector('.ad-form-header__input');
 const avatarContainer = document.querySelector('.ad-form-header__preview');
 const avatarPreview = document.querySelector('.ad-form-header__preview img');
@@ -6,8 +10,6 @@ const photoChooser = document.querySelector('.ad-form__input');
 const photosContainer = document.querySelector('.ad-form__photo');
 const photoPreview = document.querySelector('.ad-form__photo img');
 
-const IMAGE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
-const IMAGE_DEFAULT_SOURCE = 'img/muffin-grey.svg';
 
 
 const deleteChildren = (parent) => {

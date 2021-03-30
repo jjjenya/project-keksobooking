@@ -7,16 +7,18 @@ import { defaultButtonReset } from './public-reset.js';
 import { setFormActive, setFormDeactive } from './form.js';
 import { setFiltersActive, setFiltersDeactive, setFilterChange } from './filtr.js';
 
-const formAddressField = document.querySelector('#address');
+
 
 const NUMBER_AFTER_COMMA = 5;
 
 const ADDS_COUNT = 10;
 const MIN_ADDS = 0;
 
-let advertisementsToRender = [];
-
 const map = L.map('map-canvas');
+
+const formAddressField = document.querySelector('#address');
+
+let advertisementsToRender = [];
 
 
 //   Координаты по умолчанию - Токио

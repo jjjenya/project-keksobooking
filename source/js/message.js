@@ -1,13 +1,15 @@
 import { isEscEvent } from  './util.js';
 
+
+const SHOW_TIME = 10000;
+
+
 const mainElement = document.querySelector('main')
 const successMessageTemplate = document.querySelector('#success').content;
 const successMessageElement = successMessageTemplate.querySelector('.success');
 const errorMessageTemplate = document.querySelector('#error').content;
 const errorMessageElement = errorMessageTemplate.querySelector('.error');
 
-
-const SHOW_TIME = 10000;
 
 
 //   Показ ошибки, если не удалось получить данные с сервера:

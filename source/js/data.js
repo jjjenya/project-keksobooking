@@ -2,7 +2,10 @@ import { getRandomNumber, getRandomInteger, getRandomLocation, getRandomArrayEle
 
 
 // Тестовые данные
-const TITLE = [
+
+const NUMBER_AFTER_COMMA = 5;
+
+const TITLES = [
   'Дворец 1',
   'Дворец 2',
   'Квартира 1',
@@ -13,7 +16,7 @@ const TITLE = [
   'Бунгало 1',
 ];
 
-const TYPE = [
+const TYPES = [
   'palace',
   'flat',
   'house',
@@ -69,8 +72,6 @@ const Location = {
   },
 }
 
-const NUMBER_AFTER_COMMA = 5;
-
 
 //   Генерация координат объекта (функция)
 const getRandomСoordinates = function (x, y) {
@@ -95,10 +96,10 @@ const getАdvertising = () => {
       avatar: 'img/avatars/user0' + getRandomInteger(1, 8) + '.png',
     },
     offer: {
-      title: getRandomArrayElement(TITLE),
+      title: getRandomArrayElement(TITLES),
       address: location.X + ', ' + location.Y,
       price: getRandomNumber(Price.MIN, Price.MAX),
-      type: getRandomArrayElement(TYPE),
+      type: getRandomArrayElement(TYPES),
       rooms: getRandomInteger(Rooms.MIN, Rooms.MAX),
       guests: getRandomInteger(Guests.MIN, Guests.MAX),
       checkin: getRandomArrayElement(TIMES),
@@ -122,4 +123,4 @@ const createArrayАdvertising = function (numberАdvertising) {
 }
 
 
-export { createArrayАdvertising, TYPE };
+export { createArrayАdvertising };
