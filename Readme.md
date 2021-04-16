@@ -1,49 +1,48 @@
-# Личный проект «Кексобукинг»
+# проект «Кексобукинг»
 
-* Студент: [Евгения](https://up.htmlacademy.ru/javascript/22/user/1172931).
-* Наставник: [Алёна Сиприкова](https://htmlacademy.ru/profile/asiprikova).
+
+**cервис для размещения объявлений о сдаче недвижимости в Токио**
+пользователи делятся информацией о своём объекте недвижимости, размещают фотографии, указывают адрес, перемещая метку по карте города: можно посмотреть на объявления, размещённые другими пользователями
+
+   * основы JavaScript
+   * встроенные API
+   * работа с DOM-деревом
+   * модули и структуры данных
+   * обработка событий
+   * работа с сетью и сборщиками JavaScript
+
+
+
+javascript: [Евгения Сабирова](https://github.com/jjjenya).
+
+
 
 ---
 
-_Не удаляйте и не обращайте внимание на файлы и папки:_
-_`.editorconfig`, `.eslintrc`, `.gitattributes`, `.gitignore`, `package-lock.json`, `package.json`., `.github`_
+
+## [DEMO ПРОЕКТА](https://jjjenya.github.io/project-keksobooking/)
+
 
 ---
 
-### Памятка
 
-#### 1. Зарегистрируйтесь на Гитхабе
+**Инструкция**
 
-Если у вас ещё нет аккаунта на [github.com](https://github.com/join), скорее зарегистрируйтесь.
 
-#### 2. Создайте форк
+`npm install` - установка зависимостей
 
-Откройте репозиторий и нажмите кнопку «Fork» в правом верхнем углу. Репозиторий из Академии будет скопирован в ваш аккаунт.
+`npm start` - сборка проекта в режиме разработки и запуск локального сервера
 
-<img width="769" alt="" src="https://user-images.githubusercontent.com/10909/35275195-078bb816-0050-11e8-8708-89266d2fae5d.png">
+`npm test` - запуск теста на наличие стилистических ошибок
 
-Получится вот так:
+`npm run build` - финальная сборка проекта
 
-<img width="769" alt="" src="https://user-images.githubusercontent.com/10909/35275196-07baf78e-0050-11e8-9275-404a4b63efb1.png">
+`npm run deploy` - размещение проекта в GitHub Pages
 
-#### 3. Клонируйте репозиторий на свой компьютер
 
-Будьте внимательны: нужно клонировать свой репозиторий (форк), а не репозиторий Академии. Также обратите внимание, что клонировать репозиторий нужно через SSH, а не через HTTPS. Нажмите зелёную кнопку в правой части экрана, чтобы скопировать SSH-адрес вашего репозитория:
-
-<img width="769" alt="" src="https://user-images.githubusercontent.com/10909/35275197-07d8e79e-0050-11e8-95c1-a30a433687d8.png">
-
-Клонировать репозиторий можно так:
-
-```
-git clone SSH-адрес_вашего_форка
-```
-
-Команда клонирует репозиторий на ваш компьютер и подготовит всё необходимое для старта работы.
-
-#### 4. Начинайте обучение!
 
 ---
 
 <a href="https://htmlacademy.ru/intensive/javascript"><img align="left" width="50" height="50" alt="HTML Academy" src="https://up.htmlacademy.ru/static/img/intensive/javascript/logo-for-github-2.png"></a>
 
-Репозиторий создан для обучения на интенсивном онлайн‑курсе «[JavaScript. Профессиональная разработка веб-интерфейсов](https://htmlacademy.ru/intensive/javascript)» от [HTML Academy](https://htmlacademy.ru).
+Репозиторий создан для обучения на интенсивном онлайн‑курсе «[JavaScript. Профессиональная разработка веб-интерфейсов](https://htmlacademy.ru/intensive/javascript)» от [HTML Academy](https://htmlacademy.ru), наставник: [Алёна Сиприкова](https://htmlacademy.ru/profile/asiprikova)
