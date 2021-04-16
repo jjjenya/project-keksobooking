@@ -2,7 +2,7 @@
   "name": "keksobooking",
   "version": "22.0.0",
   "private": true,
-  "description": "Личный проект «Кексобукинг» от HTML Academy",
+  "description": "проект «Кексобукинг» от HTML Academy",
   "repository": {
     "type": "git",
     "url": "git@github.com:htmlacademy-javascript/1172931-keksobooking-22.git"
@@ -19,11 +19,15 @@
     "webpack-cli": "4.6.0"
   },
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "gh-pages": "^3.1.0"
+  },
+  "homepage": "https://jjjenya.github.io/project-keksobooking",
   "scripts": {
     "build": "webpack --mode production",
     "start": "browser-sync start --server \"build/\" --no-ui --files \"source/**/*.js\"",
-    "test": "eslint source/js/"
+    "test": "eslint source/js/",
+    "deploy": "gh-pages -d build"
   },
   "engines": {
     "node": ">=12.0.0"
